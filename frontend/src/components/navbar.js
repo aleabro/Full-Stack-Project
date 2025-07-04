@@ -24,8 +24,8 @@ export default function Navbar({searchText, setSearchText}) {
             {/* ms is for margin start auto and in this example pushes the li elements to the right*/}
             {/* TODO: remove ms-auto if you want to change columns */}
             <ul className="navbar-nav ms-auto">
-                {/* TODO: handle searcbar */}
-                            <input
+            {/* Search bar */}
+            <input
               className="form-control me-2"
               type="search"
               placeholder="Search events"
@@ -74,8 +74,7 @@ export default function Navbar({searchText, setSearchText}) {
                 </li>
                 <li className="nav-item">
                 <a href="{% url 'events:favorite_list' %}" className="nav-link">
-                    {" "}
-                    <i className="bi bi-heart h3 " />{" "}
+                    <i className="bi bi-heart h3 " />
                 </a>
                 </li>
                 <li className="nav-item">

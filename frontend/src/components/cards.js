@@ -22,6 +22,7 @@ export default function Cards({ events }) {
                         alt={event.title}
                         style={{ height: 200, objectFit: "cover" }}
                       />
+                      
                     </div>
                     <div className="card-title mb-3">
                       <h3>{event.title}</h3>
@@ -38,6 +39,11 @@ export default function Cards({ events }) {
                     >
                       Read More
                     </a>
+                        <LikeButton
+                        eventId={event.id}
+                        isLiked={event.is_liked}
+                        onLikeToggle={event.on_like_toggle}
+                        />
                   </div>
                 </div>
               </div>
@@ -48,4 +54,14 @@ export default function Cards({ events }) {
     </section>
   );
 }
-
+//TODO: implement LikeButton component correctly
+function LikeButton({ eventId, isLiked, onLikeToggle }) {
+  return (
+    <button
+      className={`btn ${isLiked ? 'btn-danger' : 'btn-outline-danger'}`}
+      onClick={() => onLikeToggle(eventId)}
+    >
+      <i className={`bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}`} />
+    </button>
+  );
+}
