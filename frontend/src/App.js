@@ -1,50 +1,7 @@
 
 import './App.css';
-import React, { useEffect, useState, Component } from 'react';
-
-// Sample data for events - remove this when integrating with backend
-const eventItems = [
-  {
-    title: 'Event 1',
-    description: 'Description for Event 1',
-    image: 'https://via.placeholder.com/150',
-    date: '2023-10-01',
-    location: 'Location 1',
-    is_upcoming: true,
-  },
-  {
-    title: 'Event 2',
-    description: 'Description for Event 2',
-    image: 'https://via.placeholder.com/150',
-    date: '2023-10-02',
-    location: 'Location 2',
-    is_upcoming: false,
-  },
-];
-
-// class App extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       viewCompleted: false,
-//       events: eventItems, // Initialize with sample data
-//     };
-//   }
-//   displayCompleted = (status) => {
-//     if (status) {
-//       return this.setState({viewCompleted: true});
-//     }
-//     return this.setState({viewCompleted: false});
-//   }
-//   renderTabList = () => {
-//     return (
-//       <div className="nav nav-tabs">
-//       <span className={}
-//       </div>
-//     )
-//   }
-// }
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 function App() {
@@ -52,15 +9,9 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/events/") // cambia questo URL con quello del tuo backend
+    axios.get("/api/events/")
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Errore nella risposta del server");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setEvents(data);
+        setEvents(response.data);
         setLoading(false);
       })
       .catch((error) => {
