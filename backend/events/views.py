@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Event
 from .serializers import EventSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -22,3 +24,9 @@ class EventViewSet(viewsets.ModelViewSet):
     #     if date is not None:
     #         queryset = queryset.filter(date__date=date)
     #     return queryset
+
+    # @api_view(['GET'])
+    # def event_list(request):
+    #     events = Event.objects.all()
+    #     serializer = EventSerializer(events, many=True)
+    #     return Response(serializer.data)

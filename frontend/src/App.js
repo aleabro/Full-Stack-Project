@@ -2,11 +2,19 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Navbar from './components/navbar';
+import Footer from './components/footer';
+import Cards from './components/cards';
+import Accordion from './components/accordion';
+import Newsletter from './components/newsletter';
+import Carousel from './components/carousel';
+
 
 
 function App() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     axios.get("/api/events/")
@@ -23,57 +31,20 @@ function App() {
   if (loading) {
     return <div>Caricamento eventi...</div>;
   }
+    const filteredEvents = events.filter(e =>
+    e.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
-      <h1>Event List</h1>
-      {events.length === 0 && <p>Nessun evento trovato.</p>}
-
-      {events.map((event, index) => (
-        <div
-          key={index}
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            padding: "16px",
-            marginBottom: "16px",
-            display: "flex",
-            gap: "16px",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src={event.image}
-            alt={event.title}
-            style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "4px" }}
-          />
-          <div>
-            <h2 style={{ margin: "0 0 8px 0" }}>{event.title}</h2>
-            <p style={{ margin: "0 0 8px 0" }}>{event.description}</p>
-            <p style={{ margin: "0 0 4px 0" }}>
-              <strong>Date:</strong> {event.date}
-            </p>
-            <p style={{ margin: "0 0 4px 0" }}>
-              <strong>Location:</strong> {event.location}
-            </p>
-            {event.is_upcoming && (
-              <span
-                style={{
-                  display: "inline-block",
-                  padding: "4px 8px",
-                  backgroundColor: "#4caf50",
-                  color: "white",
-                  borderRadius: "4px",
-                  fontSize: "12px",
-                }}
-              >
-                Upcoming
-              </span>
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
+    < >
+      <Navbar searchText={searchText} setSearchText={setSearchText}/>
+      <Newsletter />
+      <Carousel events={events} />
+      <Cards events={filteredEvents}/>
+      <Accordion />
+      <Footer />
+    </>
   );
 }
 
