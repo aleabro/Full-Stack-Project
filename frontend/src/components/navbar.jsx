@@ -7,7 +7,7 @@ export default function Navbar({searchText, setSearchText}) {
             <a href="{% url 'homepage:home' %}" className="navbar-brand">
             {/* TODO: change logo */}
             <img
-                src="{%static 'WeLoveEvents/logo.png'%}"
+                src="./logo.png"
                 alt="Logo"
                 style={{ width: 30 }}
             />

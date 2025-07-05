@@ -29,7 +29,7 @@ export default function Cards({ events }) {
                     </div>
                     <div className="card-subtitle mb-2">
                       <p>
-                        {formattedDate} | {event.organizer}
+                        {formattedDate} | {event.organizer.username}
                       </p>
                     </div>
                     <p className="card-text">{event.description}</p>
