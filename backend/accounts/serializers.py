@@ -1,13 +1,14 @@
 from .models import CustomUser as User
 from .models import OrganizationProfile
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 # Serializers for regular Users only
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
     class Meta:
         model = User
-        fields = ('id', 'username', 'email','password', 'first_name', 'last_name')
+        fields = ('id', 'username', 'email','password', 'first_name', 'last_name', 'user_type')
         
 
     #Method to validate the user once created
@@ -28,7 +29,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password','organization_profile')
+        fields = ('username', 'email', 'password','organization_profile', 'user_type')
 
     def create(self, validated_data):
         
@@ -41,3 +42,11 @@ class OrganizationSerializer(serializers.ModelSerializer):
         )
         OrganizationProfile.objects.create(user=user, **profile_data)
         return user
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['user_type'] = user.user_type
+        return token

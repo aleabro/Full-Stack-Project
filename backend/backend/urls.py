@@ -23,19 +23,16 @@ from django.conf.urls.static import static
 from accounts.views import CreateUserView, CreateOrganizationView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-router = routers.DefaultRouter()
-router.register(r'events', views.EventViewSet, 'events')
 
 #TODO: add different urls for different user types
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('api/user/register/', CreateUserView.as_view(), name='register'),
-    path('api/organization/register/', CreateOrganizationView.as_view(), name='register_organization'),
+    path('api/', include('events.urls')),
+    path('api/', include('accounts.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='get_token'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh'),
     path('api-auth/', include('rest_framework.urls')),
+    
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

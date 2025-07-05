@@ -1,17 +1,18 @@
+import { Link } from 'react-router-dom';
 
 export default function Navbar({searchText, setSearchText}) {
     
     return(
         <nav className="navbar navbar-expand-md bg-dark navbar-dark sticky-top py-3">
         <div className="container">
-            <a href="{% url 'homepage:home' %}" className="navbar-brand">
+            <Link to="/" className="navbar-brand">
             {/* TODO: change logo */}
             <img
                 src="./logo.png"
                 alt="Logo"
                 style={{ width: 30 }}
             />
-            </a>
+            </Link>
             <button
             className="navbar-toggler"
             type="button"
@@ -34,9 +35,9 @@ export default function Navbar({searchText, setSearchText}) {
               onChange={(e) => setSearchText(e.target.value)}
             />
                 <li className="nav-item">
-                <a href="{% url 'homepage:home' %}" className="nav-link">
+                <Link to="/" className="nav-link">
                     Home
-                </a>
+                </Link>
                 </li>
                 <li className="nav-item dropdown">
                    
@@ -112,17 +113,14 @@ export default function Navbar({searchText, setSearchText}) {
                 </a>
                 <ul className="dropdown-menu">
                     <li>
-                    <a className="dropdown-item" href="{% url 'accounts:login' %}">
+                    <Link className="dropdown-item" to="/login">
                         Login
-                    </a>
+                    </Link>
                     </li>
                     <li>
-                    <a
-                        className="dropdown-item"
-                        href="{% url 'accounts:signup_choice' %}"
-                    >
+                    <Link className="dropdown-item" to="/register-choice">
                         Sign Up
-                    </a>
+                    </Link>
                     </li>
                     <li>
                     <a className="dropdown-item" href="{% url 'accounts:profile' %}">
@@ -150,9 +148,9 @@ export default function Navbar({searchText, setSearchText}) {
                     <hr className="dropdown-divider" />
                     </li>
                     <li>
-                    <a className="dropdown-item" href="{% url 'accounts:logout' %}">
+                    <Link className="dropdown-item" to="/logout">
                         Logout
-                    </a>
+                    </Link>
                     </li>
                 </ul>
                 </li>

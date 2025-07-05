@@ -3,6 +3,8 @@ from .models import CustomUser as User
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import UserSerializer, OrganizationSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import MyTokenObtainPairSerializer 
 
 # Create your views here.
 
@@ -31,3 +33,10 @@ class CreateOrganizationView(generics.CreateAPIView):
 
 #     def perform_create(self, serializer):
 #         serializer.save()
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    """
+    Vista di login personalizzata che usa il nostro serializer
+    per includere i ruoli nel token.
+    """
+    serializer_class = MyTokenObtainPairSerializer

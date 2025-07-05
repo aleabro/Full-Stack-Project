@@ -26,6 +26,10 @@ class Event(models.Model):
     def is_upcoming(self):
         return self.date >= timezone.now()
     
+    def is_past(self):
+        return self.date < timezone.now()
+    
+    
    
     
 class Favorite(models.Model):
@@ -43,3 +47,4 @@ class Favorite(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.event.title}"
+    
