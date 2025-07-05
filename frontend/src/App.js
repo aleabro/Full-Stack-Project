@@ -5,8 +5,6 @@ import HomePage from './components/HomePage';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
-import Home from './pages/Home';
-import Register from './pages/Register';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import LoginPage from "./pages/LoginPage";
@@ -19,12 +17,6 @@ function LogOut() {
   localStorage.clear();
   return <Navigate to="/login" />;
 }
-
-function RegisterAndLogout() {
-  localStorage.clear();
-  return <Register />;
-}
-
 
 function App() {
   const [events, setEvents] = useState([]);
@@ -53,7 +45,12 @@ function App() {
     <BrowserRouter>
     <Navbar searchText={searchText} setSearchText={setSearchText} />
       <Routes>
-        <Route path='/' element={<ProtectedRoute allowedRoles={['organization', 'regular', 'Regular User', 'Organization']}> <Home /> </ProtectedRoute>} />
+        <Route path='/' element={
+        <HomePage 
+        events={events} 
+        searchText={searchText} 
+        setSearchText={setSearchText} 
+        />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/logout" element={<LogOut />} />
         <Route path="/register-choice" element={<RegisterChoicePage />} />
@@ -62,11 +59,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       
-      {/* <HomePage 
-        events={events} 
-        searchText={searchText} 
-        setSearchText={setSearchText} 
-      /> */}
+
     </BrowserRouter>
     <Footer />
     </>

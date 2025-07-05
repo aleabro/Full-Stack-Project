@@ -43,10 +43,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
         OrganizationProfile.objects.create(user=user, **profile_data)
         return user
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token['user_type'] = user.user_type
+        # Aggiungi dati custom
+        token["user_type"] = user.user_type
+
         return token
