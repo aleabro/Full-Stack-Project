@@ -2,6 +2,10 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
+'''
+CustomUser designates two types of users: Regular User and Organization. It extends the AbstractUser model to include user_type field.
+All other attributes are in common between both types of users.
+'''
 class CustomUser(AbstractUser):
 
     class UserType(models.TextChoices):
@@ -14,7 +18,7 @@ class CustomUser(AbstractUser):
         default=UserType.REGULAR,
         help_text="Designa il tipo di utente."
     )
-
+    
     @property
     def is_organization(self):
         return self.user_type == self.UserType.ORGANIZATION
@@ -26,6 +30,9 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
+'''
+OrganizationProfile is a model that extends the CustomUser model to include organization-specific fields.
+'''
 class OrganizationProfile(models.Model):
 
     user = models.OneToOneField(

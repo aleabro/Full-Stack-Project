@@ -2,8 +2,9 @@ from rest_framework import serializers
 from .models import Event, Favorite
 from accounts.serializers import UserSerializer
 
-class EventSerializer(serializers.ModelSerializer):
 
+class EventSerializer(serializers.ModelSerializer):
+    # The organizer field is a foreign key to the User model, so we can use UserSerializer to serialize it
     organizer = UserSerializer(read_only=True)
     is_favorited = serializers.SerializerMethodField()
 
@@ -16,11 +17,10 @@ class EventSerializer(serializers.ModelSerializer):
         user = self.context.get('request').user
         if user.is_anonymous:
             return False
-        return obj.favorite_set.filter(user=user).exists()
+        return obj.favorites.filter(user=user).exists()
 
-
+# This serializer is used to create or update a favorite for an event
 class FavoriteSerializer(serializers.ModelSerializer):
-
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:

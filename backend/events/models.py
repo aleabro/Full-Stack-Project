@@ -2,9 +2,10 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.contrib import admin
-
 from accounts.models import CustomUser 
 
+'''
+Event has a ForeignKey to the Organizer that created it'''
 class Event(models.Model):
     organizer = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
@@ -18,6 +19,7 @@ class Event(models.Model):
     date = models.DateTimeField("Event Date")
     location = models.CharField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)
+    # Add other fields as needed, such as category
 
     def __str__(self):
         return self.title
@@ -29,9 +31,11 @@ class Event(models.Model):
     def is_past(self):
         return self.date < timezone.now()
     
+    # Add other methods as needed
+    
     
    
-    
+# Favorite model to allow users to favorite events. Each user can favorite an event only once. and is a foreign key to the Event model.    
 class Favorite(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 

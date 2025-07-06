@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from .models import CustomUser as User
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import UserSerializer, OrganizationSerializer, CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -25,14 +24,16 @@ class CreateOrganizationView(generics.CreateAPIView):
 
     def get_object(self):
         return self.request.user
-    
-# class RegisterView(generics.CreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = RegisterSerializer
-#     permission_classes = [AllowAny]
 
-#     def perform_create(self, serializer):
-#         serializer.save()
+# This view is for retrieving, updating, or deleting the profile of the authenticated user
+# TODO: implement in the future for user page
+class ProfileView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
 
+    def get_object(self):
+        return self.request.user
+
+# Custom Token View to include user_type in the token
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

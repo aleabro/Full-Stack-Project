@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
     class Meta:
         model = User
+        # add here if you want to include more fields to pass to the API
         fields = ('id', 'username', 'email','password', 'first_name', 'last_name', 'user_type')
         
 
@@ -17,11 +18,13 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+
 class OrganizationProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrganizationProfile
         fields = ['organization_name', 'logo', 'partita_iva', 'address']
 
+# Separate serializer for OrganizationProfile
 class OrganizationSerializer(serializers.ModelSerializer):
 
     organization_profile = OrganizationProfileSerializer(required=False)
@@ -43,12 +46,11 @@ class OrganizationSerializer(serializers.ModelSerializer):
         OrganizationProfile.objects.create(user=user, **profile_data)
         return user
 
+# Custom Token Serializer to include user_type in the token needed for the frontend and JWT authentication
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
-        # Aggiungi dati custom
         token["user_type"] = user.user_type
 
         return token

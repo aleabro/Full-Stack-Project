@@ -2,6 +2,11 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, OrganizationProfile
 
+''' 
+Admin configuration for Users and Organization Profiles 
+
+'''
+
 class OrganizationProfileInline(admin.StackedInline):
     model = OrganizationProfile
     verbose_name_plural = 'Profilo Organizzazione'
