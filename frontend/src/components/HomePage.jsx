@@ -1,6 +1,4 @@
 import React from "react";
-import Navbar from "./navbar";
-import Footer from "./footer";
 import Cards from "./cards";
 import Accordion from "./accordion";
 import Newsletter from "./newsletter";
@@ -13,12 +11,11 @@ export default function HomePage({ events, searchText, setSearchText }) {
 
   return (
     <>
-      <Navbar searchText={searchText} setSearchText={setSearchText} />
       <Newsletter />
       <Carousel events={events} />
       <Cards events={filteredEvents} />
       <Accordion />
-      <Footer />
+      
     </>
   );
 }

@@ -56,6 +56,9 @@ function App() {
         <Route path="/register-choice" element={<RegisterChoicePage />} />
         <Route path="/register-user" element={<RegisterUserPage />} />
         <Route path="/register-organization" element={<RegisterOrganizationPage />} />
+        <Route element={<ProtectedRoute allowedRoles={['organization']} />}>
+        <Route path="/dashboard" element={<NotFound />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
       
