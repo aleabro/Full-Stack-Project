@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
+import { EventCardGeneric } from "../components/cards";
+import { ReadMoreButton, LikeButton } from "../components/Buttons";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState([]);
@@ -29,13 +31,10 @@ export default function Favorites() {
       <div className="row">
         {favorites.map(event => (
           <div className="col-md-4" key={event.id}>
-            <div className="card">
-              <img src={event.image} alt={event.title} />
-              <div className="card-body">
-                <h5>{event.title}</h5>
-                <p>{event.date}</p>
-              </div>
-            </div>
+            <EventCardGeneric event={event}>
+              <ReadMoreButton eventId={event.id} />
+              <LikeButton eventId={event.id} initialIsFavorited={true} />
+              </EventCardGeneric>
           </div>
         ))}
       </div>

@@ -34,11 +34,7 @@ export default function Navbar({searchText, setSearchText}) {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
-                <li className="nav-item">
-                <Link to="/" className="nav-link">
-                    Home
-                </Link>
-                </li>
+
                 <li className="nav-item dropdown">
                    
                 </li>
@@ -63,42 +59,24 @@ export default function Navbar({searchText, setSearchText}) {
                         Città 2
                     </a>
                     </li>
-                    <li>
-                    <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                    <a className="dropdown-item" href="#">
-                        Città n
-                    </a>
-                    </li>
                 </ul>
                 </li>
                 <li className="nav-item">
-                <a href="{% url 'events:favorite_list' %}" className="nav-link">
+                <Link to="/favorites" className="nav-link">
                     <i className="bi bi-heart h3 " />
-                </a>
+                </Link>
                 </li>
-                <li className="nav-item">
-                <a href="#" className="nav-link">
-                    {/* TODO: add language support */}
-                    <img
-                    src="https://img.icons8.com/?size=100&id=WmOfu4e7Rvp7&format=png&color=000000"
-                    alt="Language"
-                    style={{ height: 30 }}
-                    />
-                </a>
-                </li>
+                {/* TODO: add multilanguage support */}
                 <li className="nav-item">
                 {/* TODO: add icon moon fill when in dark mode add darkmode*/}
                 <a href="#" className="nav-link">
-                    {" "}
-                    <i className="bi bi-moon h3" />{" "}
+                    
+                    <i className="bi bi-moon h3" />
                 </a>
                 </li>
                 <li className="nav-item">
-                <a href="#FAQ" className="nav-link">
-                    {" "}
-                    <i className="bi bi-question-lg h3" />{" "}
+                <a href="#FAQ" className="nav-link">                   
+                    <i className="bi bi-question-lg h3" />
                 </a>
                 </li>
                 <li className="nav-item dropdown">

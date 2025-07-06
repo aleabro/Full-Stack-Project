@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import {LikeButton} from "../components/cards"; 
+import {LikeButton} from "../components/Buttons"; 
+import { EventCardGeneric } from "../components/cards";
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -26,36 +27,14 @@ useEffect(() => {
   if (!event) return <div>Evento non trovato</div>;
 
   return (
-    <div className="container mt-4">
-      <div className="card">
-        {event.image && (
-          <img
-            src={event.image}
-            alt={event.title}
-            className="card-img-top"
-            style={{ maxHeight: "400px", objectFit: "cover" }}
-          />
-        )}
-        <div className="card-body">
-          <h3 className="card-title">{event.title}</h3>
-          <p className="card-text">{event.description}</p>
-          <p>
-            📍 <strong>Location:</strong> {event.location}
-          </p>
-          <p>
-            📅 <strong>Data:</strong>{" "}
-            {new Date(event.date).toLocaleString("it-IT")}
-          </p>
-          <p>
-            👤 <strong>Organizzatore:</strong> {event.organizer?.username}
-          </p>
+    <EventCardGeneric
+  event={event}
+  className="w-100"
+  imageHeight="400px"
+  fullWidthImage
+>
+  <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
+</EventCardGeneric>
 
-          <LikeButton
-            eventId={event.id}
-            initialIsFavorited={event.is_favorited}
-          />
-        </div>
-      </div>
-    </div>
   );
 }

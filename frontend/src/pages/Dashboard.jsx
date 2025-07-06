@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../api";
+import {EventCardGeneric} from "../components/cards";
+import { EditButton, DeleteButton } from "../components/Buttons";
 
 export default function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -63,11 +65,10 @@ export default function Dashboard() {
       <div className="row">
         {events.map((event) => (
           <div className="col-md-4" key={event.id}>
-            <EventCard
-              event={event}
-              onDelete={() => handleDelete(event.id)}
-              onEdit={() => handleEdit(event)}
-            />
+            <EventCardGeneric event={event}>
+              <EditButton onEdit={() => handleEdit(event)} />
+              <DeleteButton onDelete={() => handleDelete(event.id)} />
+            </EventCardGeneric>
           </div>
         ))}
       </div>
