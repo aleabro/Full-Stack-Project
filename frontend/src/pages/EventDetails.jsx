@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import api from "../api";
+import axios from "axios";
 import {LikeButton} from "../components/cards"; 
 
 export default function EventDetails() {
@@ -8,20 +8,19 @@ export default function EventDetails() {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchEvent = async () => {
-      try {
-        const res = await api.get(`api/events/${id}/`);
-        setEvent(res.data);
-      } catch (err) {
-        console.error("Errore nel fetch dell'evento:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvent();
-  }, [id]);
+useEffect(() => {
+  setLoading(true);
+  axios.get(`/api/events/${id}/`)
+    .then((res) => {
+      setEvent(res.data);
+    })
+    .catch((err) => {
+      console.error("Errore nel fetch dell'evento:", err);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+}, [id]);
 
   if (loading) return <div>Caricamento evento...</div>;
   if (!event) return <div>Evento non trovato</div>;
