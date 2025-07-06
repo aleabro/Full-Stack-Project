@@ -34,6 +34,8 @@ Don't change the names of these variables, they are already imported in `setting
 
 It is reccomended to use a [virtual environment](https://docs.python.org/3/library/venv.html) to avoid dependencies conflicts
 
+### Backend 
+
 Change directory into `backend`:
 
 ```cd backend```
@@ -48,6 +50,10 @@ Install all the backend dependencies (some may be missing from this list):
 
 ```
 pip install Django, djangorestframework, django-cors-headers, djangorestframework-simplejwt, sqlparse ,psycopg2-binary
+```
+if you're using windows install also 
+```
+pip install pillow
 ```
 Apply migrations to set up the database tables:
 
@@ -70,6 +76,10 @@ The backend API should now be running at **http://localhost:8000**
 
 If everything's working correctly it's time to configure the frontend 
 
+### Frontend
+
+**Node.js** is necessary for using react so if haven't installed it already refer to [Download Node.s](https://nodejs.org/en/download).
+
 Change directory into the `frontend`:
 ```
 cd frontend
@@ -77,6 +87,7 @@ cd frontend
 Install all the frontend dependencies:
 ```
 npm install
+# If jwt-decode is missing try to download it manually with npm install jwt-decode
 ```
 Start the frontend development server:
 ```
