@@ -1,31 +1,21 @@
-import './App.css';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import HomePage from './components/HomePage';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import NotFound from './pages/NotFound';
-import ProtectedRoute from './components/ProtectedRoute';
+import { BrowserRouter} from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
-import LoginPage from "./pages/LoginPage";
-import RegisterChoicePage from "./pages/RegisterChoicePage";
-import RegisterUserPage from "./pages/RegisterUserPage";
-import RegisterOrganizationPage from "./pages/RegisterOrganizationPage";
-import Dashboard from './pages/Dashboard';
-import UserFavorites from './pages/UserFavorites';
-import Profile from './pages/Profile';
+import AppRoutes from './AppRoutes';
 
-
-function LogOut() {
-  localStorage.clear();
-  return <Navigate to="/login" />;
-}
 
 function App() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  // State for search text
+  // This will be used to filter events based on user input in the search bar
   const [searchText, setSearchText] = useState("");
 
+  // Fetch events from the API when the component mounts
+  
   useEffect(() => {
     axios.get("/api/events/")
       .then((response) => {
@@ -42,46 +32,13 @@ function App() {
     return <div>Caricamento eventi...</div>;
   }
   
-  return (
-    < >
-    
-    <BrowserRouter>
-    <Navbar searchText={searchText} setSearchText={setSearchText} />
-      <Routes>
-        <Route path='/' element={
-        <HomePage 
-        events={events} 
-        searchText={searchText} 
-        setSearchText={setSearchText} 
-        />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/logout" element={<LogOut />} />
-        <Route path="/register-choice" element={<RegisterChoicePage />} />
-        <Route path="/register-user" element={<RegisterUserPage />} />
-        <Route path="/register-organization" element={<RegisterOrganizationPage />} />
-        <Route path="/dashboard"
-                element={
-                  <ProtectedRoute allowedRoles={['organization']}>
-                    <Dashboard />
-                  </ProtectedRoute>
-                  }
-        />
-        <Route element={<ProtectedRoute allowedRoles={['regular']} />}>
-        <Route path="/favorites" element={<UserFavorites />} />
-        </Route>
-                <Route path="/profile"
-                element={
-                  <ProtectedRoute allowedRoles={['organization', 'regular']}>
-                    <Profile />
-                  </ProtectedRoute>
-                  }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      
-
-    </BrowserRouter>
-    <Footer />
+return (
+    <>
+      <BrowserRouter>
+        <Navbar searchText={searchText} setSearchText={setSearchText} />
+        <AppRoutes events={events} searchText={searchText} setSearchText={setSearchText} />
+      </BrowserRouter>
+      <Footer />
     </>
   );
 }
