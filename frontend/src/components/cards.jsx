@@ -16,12 +16,16 @@ export default function Cards({ events }) {
                 <div className="card bg-dark text-light">
                   <div className="card-body text-center">
                     <div className="h1 mb-3">
+                      <a
+                      href={`/events/${event.id}`}
+                      >
                       <img
                         src={event.image}
                         className="d-block w-100"
                         alt={event.title}
                         style={{ height: 200, objectFit: "cover" }}
                       />
+                      </a>
                       
                     </div>
                     <div className="card-title mb-3">

@@ -5,3 +5,5 @@ export default function NotFound() {
         </div>
     );
 }
+
+// TODO: add a little bit of style to this page

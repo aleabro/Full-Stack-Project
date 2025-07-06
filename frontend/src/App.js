@@ -11,6 +11,9 @@ import LoginPage from "./pages/LoginPage";
 import RegisterChoicePage from "./pages/RegisterChoicePage";
 import RegisterUserPage from "./pages/RegisterUserPage";
 import RegisterOrganizationPage from "./pages/RegisterOrganizationPage";
+import Dashboard from './pages/Dashboard';
+import UserFavorites from './pages/UserFavorites';
+import Profile from './pages/Profile';
 
 
 function LogOut() {
@@ -56,9 +59,23 @@ function App() {
         <Route path="/register-choice" element={<RegisterChoicePage />} />
         <Route path="/register-user" element={<RegisterUserPage />} />
         <Route path="/register-organization" element={<RegisterOrganizationPage />} />
-        <Route element={<ProtectedRoute allowedRoles={['organization']} />}>
-        <Route path="/dashboard" element={<NotFound />} />
+        <Route path="/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={['organization']}>
+                    <Dashboard />
+                  </ProtectedRoute>
+                  }
+        />
+        <Route element={<ProtectedRoute allowedRoles={['regular']} />}>
+        <Route path="/favorites" element={<UserFavorites />} />
         </Route>
+                <Route path="/profile"
+                element={
+                  <ProtectedRoute allowedRoles={['organization', 'regular']}>
+                    <Profile />
+                  </ProtectedRoute>
+                  }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       

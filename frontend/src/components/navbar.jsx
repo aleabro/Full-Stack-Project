@@ -129,20 +129,20 @@ export default function Navbar({searchText, setSearchText}) {
                     </li>
                     {/* Check if the user is an organization */}
                     <li>
-                    <a
+                    <Link
                         className="dropdown-item"
-                        href="{% url 'events:organization_dashboard' %}"
+                        to="/dashboard"
                     >
                         Your Events
-                    </a>
+                    </Link>
                     </li>
                     <li>
-                    <a
+                    <Link
                         className="dropdown-item"
-                        href="{% url 'events:favorite_list' %}"
+                        to="/favorites"
                     >
                         Your Favorites
-                    </a>
+                    </Link>
                     </li>
                     <li>
                     <hr className="dropdown-divider" />
