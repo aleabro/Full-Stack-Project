@@ -1,4 +1,6 @@
-
+import { useState } from "react";
+import api from "../api";
+import { Link } from "react-router-dom";
 
 export default function Cards({ events }) {
   return (
@@ -16,8 +18,8 @@ export default function Cards({ events }) {
                 <div className="card bg-dark text-light">
                   <div className="card-body text-center">
                     <div className="h1 mb-3">
-                      <a
-                      href={`/events/${event.id}`}
+                      <Link
+                      to={`/events/${event.id}`}
                       >
                       <img
                         src={event.image}
@@ -25,7 +27,7 @@ export default function Cards({ events }) {
                         alt={event.title}
                         style={{ height: 200, objectFit: "cover" }}
                       />
-                      </a>
+                      </Link>
                       
                     </div>
                     <div className="card-title mb-3">
@@ -37,17 +39,14 @@ export default function Cards({ events }) {
                       </p>
                     </div>
                     <p className="card-text">{event.description}</p>
-                    <a
-                      href={`/events/${event.id}`}
+                    <Link
+                      to={`/events/${event.id}`}
                       className="btn btn-primary"
                     >
                       Read More
-                    </a>
-                        <LikeButton
-                        eventId={event.id}
-                        isLiked={event.is_liked}
-                        onLikeToggle={event.on_like_toggle}
-                        />
+                    </Link>
+                        <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
+
                   </div>
                 </div>
               </div>
@@ -59,13 +58,36 @@ export default function Cards({ events }) {
   );
 }
 //TODO: implement LikeButton component correctly
-function LikeButton({ eventId, isLiked, onLikeToggle }) {
+export function LikeButton({ eventId, initialIsFavorited }) {
+  const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
+  const [loading, setLoading] = useState(false);
+
+  const toggleFavorite = async () => {
+    if (loading) return; // evita doppio click
+    setLoading(true);
+    try {
+      const res = await api.post(`api/events/${eventId}/favorite/`);
+      if (res.data.status === "favorited") {
+        setIsFavorited(true);
+      } else {
+        setIsFavorited(false);
+      }
+    } catch (err) {
+      console.error("Error toggling favorite:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <button
-      className={`btn ${isLiked ? 'btn-danger' : 'btn-outline-danger'}`}
-      onClick={() => onLikeToggle(eventId)}
+      className={`btn ${isFavorited ? 'btn-danger' : 'btn-outline-danger'}`}
+      onClick={toggleFavorite}
+      disabled={loading}
+      title={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
     >
-      <i className={`bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}`} />
+      <i className={`bi ${isFavorited ? 'bi-heart-fill' : 'bi-heart'}`} />
+      {loading && <span className="spinner-border spinner-border-sm ms-2" />}
     </button>
   );
 }

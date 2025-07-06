@@ -1,5 +1,5 @@
 export default function Carousel({ events }) {
-    //TODO: fix animation
+    //TODO: fix animation add default image
   return (
     <div
       id="carouselExample" className="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval={4000}

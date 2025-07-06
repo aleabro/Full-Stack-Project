@@ -89,7 +89,7 @@ export default function Navbar({searchText, setSearchText}) {
                 </a>
                 </li>
                 <li className="nav-item">
-                {/* TODO: add icon moon fill when in dark mode*/}
+                {/* TODO: add icon moon fill when in dark mode add darkmode*/}
                 <a href="#" className="nav-link">
                     {" "}
                     <i className="bi bi-moon h3" />{" "}

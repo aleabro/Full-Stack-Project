@@ -1,1 +1,1 @@
-//TODO: implement adter fetching user types from backend
+//TODO: implement after fetching user types from backend
