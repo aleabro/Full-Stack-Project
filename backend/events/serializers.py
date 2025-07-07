@@ -10,7 +10,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id','title', 'description', 'image', 'date', 'location', 'is_upcoming', 'organizer', 'is_favorited', 'created_at')
+        fields = ('id','title', 'description', 'image', 'date', 'location', 'is_upcoming', 'organizer', 'is_favorited', 'created_at', 'provincia', 'category', 'price')
         read_only_fields = ('organizer', 'is_upcoming', 'is_favorited')
 
     def get_is_favorited(self, obj):

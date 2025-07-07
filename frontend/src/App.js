@@ -5,6 +5,7 @@ import { BrowserRouter} from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import AppRoutes from './AppRoutes';
+import ProvinciaPage from './pages/ProvinciaPage';
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
 return (
     <>
       <BrowserRouter>
-        <Navbar searchText={searchText} setSearchText={setSearchText} />
+        <Navbar events={events} searchText={searchText} setSearchText={setSearchText} />
         <AppRoutes events={events} searchText={searchText} setSearchText={setSearchText} />
       </BrowserRouter>
       <Footer />

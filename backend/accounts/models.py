@@ -43,7 +43,7 @@ class OrganizationProfile(models.Model):
     )
     organization_name = models.CharField(max_length=255)
     logo = models.ImageField(upload_to='logos/', blank=True, null=True)
-    partita_iva = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    cv = models.CharField(max_length=20, unique=True, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):

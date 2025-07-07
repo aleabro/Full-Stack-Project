@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
 
-export default function Navbar({searchText, setSearchText}) {
+export default function Navbar({events, searchText, setSearchText}) {
+
+    console.log("Events:", events);
+    console.log("Province estratte:", events?.map(event => event.provincia));
+
+        const uniqueProvinces = Array.from(
+        new Set(events.map(event => event.provincia).filter(Boolean))
+    );
     
     return(
         <nav className="navbar navbar-expand-md bg-dark navbar-dark sticky-top py-3">
@@ -39,27 +46,30 @@ export default function Navbar({searchText, setSearchText}) {
                    
                 </li>
                 <li className="nav-item dropdown">
-                <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                    Località
-                </a>
-                <ul className="dropdown-menu">
-                    <li>
-                    <a className="dropdown-item" href="#">
-                        Città 1
+                    <a
+                        className="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        >
+                        Località
                     </a>
-                    </li>
-                    <li>
-                    <a className="dropdown-item" href="#">
-                        Città 2
-                    </a>
-                    </li>
-                </ul>
+                    <ul className="dropdown-menu">
+                        {uniqueProvinces.length === 0 && (
+                        <li>
+                            <span className="dropdown-item text-muted">Nessuna provincia</span>
+                        </li>
+                        )}
+                        {uniqueProvinces.map((provincia) => (
+                            console.log("Provincia:", provincia),
+                        <li key={provincia}>
+                            <Link className="dropdown-item" to={`/province/${provincia}`}>
+                                {provincia}
+                            </Link>
+                        </li>
+                        ))}
+                    </ul>
                 </li>
                 <li className="nav-item">
                 <Link to="/favorites" className="nav-link">

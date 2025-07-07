@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import ProfileOrganization from './pages/ProfileOrganization';
+import ProvinciaPage from './pages/ProvinciaPage';
 
 function LogOut() {
   localStorage.clear();
@@ -48,6 +49,9 @@ export default function AppRoutes({ events, searchText, setSearchText }) {
       <Route path="/register-choice" element={<RegisterChoicePage />} />
       <Route path="/register-user" element={<RegisterUserPage />} />
       <Route path="/register-organization" element={<RegisterOrganizationPage />} />
+      <Route path="/province/:provincia" element={<ProvinciaPage events={events} />} />
+
+
 
       <Route path="/dashboard"
         element={
