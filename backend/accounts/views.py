@@ -1,7 +1,7 @@
 from .models import CustomUser as User
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializers import UserSerializer, OrganizationSerializer, CustomTokenObtainPairSerializer
+from .serializers import UserSerializer, OrganizationSerializer, CustomTokenObtainPairSerializer, UserUpdateSerializer, OrganizationUpdateSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
@@ -29,10 +29,19 @@ class CreateOrganizationView(generics.CreateAPIView):
 # TODO: implement in the future for user page
 class ProfileView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = UserSerializer
+    serializer_class = UserUpdateSerializer
 
     def get_object(self):
         return self.request.user
+
+class OrganizationProfileView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrganizationUpdateSerializer
+
+    def get_object(self):
+        return self.request.user
+
+
 
 # Custom Token View to include user_type in the token
 class CustomTokenObtainPairView(TokenObtainPairView):

@@ -101,9 +101,9 @@ export default function Navbar({searchText, setSearchText}) {
                     </Link>
                     </li>
                     <li>
-                    <a className="dropdown-item" href="{% url 'accounts:profile' %}">
+                    <Link className="dropdown-item" to="/profile">
                         Your profile
-                    </a>
+                    </Link>
                     </li>
                     {/* Check if the user is an organization */}
                     <li>

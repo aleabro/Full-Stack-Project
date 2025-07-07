@@ -10,6 +10,7 @@ import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
+import ProfileOrganization from './pages/ProfileOrganization';
 
 function LogOut() {
   localStorage.clear();
@@ -66,8 +67,15 @@ export default function AppRoutes({ events, searchText, setSearchText }) {
 
       <Route path="/profile"
         element={
-          <ProtectedRoute allowedRoles={['organization', 'regular']}>
+          <ProtectedRoute allowedRoles={['regular']}>
             <Profile />
+          </ProtectedRoute>
+        } 
+      />
+            <Route path="/organization/profile"
+        element={
+          <ProtectedRoute allowedRoles={['organization']}>
+            <ProfileOrganization />
           </ProtectedRoute>
         } 
       />

@@ -1,88 +1,142 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../api";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { EditButton, DeleteButton, SaveButton, CancelButton } from "../components/Buttons";
 
 export default function Profile() {
-  const [userData, setUserData] = useState(null);
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(null);
+  const [originalUser, setOriginalUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchProfile();
+    api.get("api/profile/")
+      .then(res => {
+        setUser(res.data);
+        setOriginalUser(res.data);  // Salva stato iniziale
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
-  const fetchProfile = async () => {
-    try {
-      const res = await api.get("/user/profile/");
-      setUserData(res.data);
-      setUsername(res.data.username);
-    } catch (err) {
-      console.error(err);
-      alert("Error fetching profile");
-    } finally {
-      setLoading(false);
-    }
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      await api.patch("/api/user/profile/", { username });
-      alert("Username updated!");
-      fetchProfile();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to update username");
-    }
+  const handleSave = () => {
+    const payload = {
+      username: user.username,
+      email: user.email,
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+    };
+
+    api.put("api/profile/", payload)
+      .then(() => {
+        setEditing(false);
+        setOriginalUser(user);
+        alert("Profile updated!");
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error updating profile.");
+      });
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete your account? This action is irreversible.")) return;
-    try {
-      await api.delete("/api/user/profile/");
-      localStorage.removeItem(ACCESS_TOKEN);
-      localStorage.removeItem(REFRESH_TOKEN);
-      navigate("/register");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete account");
-    }
+  const handleCancel = () => {
+    setUser(originalUser);
+    setEditing(false);
+  };
+
+  const handleDelete = () => {
+    if (!window.confirm("Are you sure you want to delete your account?")) return;
+
+    api.delete("api/profile/")
+      .then(() => {
+        localStorage.clear();
+        navigate("/register-choice");
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error deleting account.");
+      });
   };
 
   if (loading) return <div>Loading...</div>;
+  if (!user) return <div>Error loading profile.</div>;
 
-    if (!loading && userData?.user_type === "organization") {
-    return <OrganizationProfileView userData={userData} />;
-    }
-
-    if (!loading && userData?.user_type === "regular") {
-    return <RegularUserProfileView userData={userData} />;
-    }
-}
-function RegularUserProfileView({ userData }) {
   return (
-    <div className="container mt-5">
-      <h2>Your Profile (Regular User)</h2>
-      <p>Username: {userData.username}</p>
-      <p>Email: {userData.email}</p>
-      <p>First Name: {userData.first_name}</p>
-      <p>Last Name: {userData.last_name}</p>
-    </div>
-  );
-}
+    <div className="container mt-4">
+      <h2>My Profile</h2>
 
-function OrganizationProfileView({ userData }) {
-  return (
-    <div className="container mt-5">
-      <h2>Your Profile (Organization)</h2>
-      <p>Username: {userData.username}</p>
-      <p>Email: {userData.email}</p>
-      <p>Organization Name: {userData.organization_profile?.organization_name}</p>
-      <p>Address: {userData.organization_profile?.address}</p>
-      <p>Partita IVA: {userData.organization_profile?.partita_iva}</p>
+      <div className="mb-3">
+        <label>Username</label>
+        <input
+          className="form-control"
+          name="username"
+          value={user.username}
+          onChange={handleChange}
+          disabled={!editing}
+        />
+      </div>
+
+      <div className="mb-3">
+        <label>Email</label>
+        <input
+          className="form-control"
+          name="email"
+          value={user.email}
+          onChange={handleChange}
+          disabled={!editing}
+        />
+      </div>
+
+      <div className="mb-3">
+        <label>First Name</label>
+        <input
+          className="form-control"
+          name="first_name"
+          value={user.first_name || ""}
+          onChange={handleChange}
+          disabled={!editing}
+        />
+      </div>
+
+      <div className="mb-3">
+        <label>Last Name</label>
+        <input
+          className="form-control"
+          name="last_name"
+          value={user.last_name || ""}
+          onChange={handleChange}
+          disabled={!editing}
+        />
+      </div>
+
+      <div className="mb-3">
+        <label>User Type</label>
+        <input
+          className="form-control"
+          value={user.user_type}
+          disabled
+        />
+      </div>
+
+      <div>
+        {!editing ? (
+          <EditButton onEdit={() => setEditing(true)} />
+        ) : (
+          <>
+            <SaveButton onSave={handleSave} />
+            <CancelButton onCancel={handleCancel} />
+          </>
+        )}
+        <DeleteButton onDelete={handleDelete} />
+      </div>
     </div>
   );
 }

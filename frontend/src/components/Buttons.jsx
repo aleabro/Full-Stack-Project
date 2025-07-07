@@ -60,3 +60,20 @@ export function DeleteButton({ onDelete }) {
     </button>
   );
 }
+
+export function SaveButton({ onSave }) {
+  return (
+    <button onClick={onSave} className="btn btn-success btn-sm">
+      Salva
+    </button>
+  );
+}
+
+
+export function CancelButton({ onCancel }) {
+  return (
+    <button onClick={onCancel} className="btn btn-secondary btn-sm me-2">
+      Cancel
+    </button>
+  );
+}
