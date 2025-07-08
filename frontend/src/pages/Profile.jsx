@@ -10,17 +10,22 @@ export default function Profile() {
   const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const fetchProfile = () => {
+    setLoading(true);
     api.get("api/profile/")
       .then(res => {
         setUser(res.data);
-        setOriginalUser(res.data);  // Salva stato iniziale
+        setOriginalUser(res.data);
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchProfile();
   }, []);
 
   const handleChange = (e) => {
@@ -33,6 +38,7 @@ export default function Profile() {
       email: user.email,
       first_name: user.first_name || "",
       last_name: user.last_name || "",
+      newsletter_subscription: user.newsletter_subscription || false,
     };
 
     api.put("api/profile/", payload)
@@ -40,6 +46,7 @@ export default function Profile() {
         setEditing(false);
         setOriginalUser(user);
         alert("Profile updated!");
+        fetchProfile();  // Refresh profile data
       })
       .catch(err => {
         console.error(err);
@@ -59,6 +66,7 @@ export default function Profile() {
       .then(() => {
         localStorage.clear();
         navigate("/register-choice");
+        window.location.reload(); // hard reload after delete
       })
       .catch(err => {
         console.error(err);
@@ -77,7 +85,7 @@ export default function Profile() {
 
   return (
     <div className="container mt-4">
-      <h2>My Profile</h2>
+      <h2>Il mio profilo</h2>
 
       <div className="mb-3">
         <label>Username</label>
@@ -121,6 +129,22 @@ export default function Profile() {
           onChange={handleChange}
           disabled={!editing}
         />
+      </div>
+
+      <div className="mb-3 form-check">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          name="newsletter_subscription"
+          checked={user.newsletter_subscription || false}
+          onChange={(e) =>
+            setUser({ ...user, newsletter_subscription: e.target.checked })
+          }
+          disabled={!editing}
+        />
+        <label className="form-check-label">
+          Iscritto alla newsletter
+        </label>
       </div>
 
       <div className="mb-3">

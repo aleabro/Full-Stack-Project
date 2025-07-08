@@ -19,6 +19,8 @@ class CustomUser(AbstractUser):
         help_text="Designa il tipo di utente."
     )
     
+    newsletter_subscription = models.BooleanField(default=False, help_text="Indica se l'utente è iscritto alla newsletter.")
+    
     @property
     def is_organization(self):
         return self.user_type == self.UserType.ORGANIZATION
