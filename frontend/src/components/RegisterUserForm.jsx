@@ -10,6 +10,7 @@ export default function RegisterUserForm() {
     password: "",
     first_name: "",
     last_name: "",
+    newsletter_subscription: false,
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -69,17 +70,35 @@ export default function RegisterUserForm() {
                     required
                   />
                 </div>
+              
+                <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="newsletter_subscription"
+                  checked={formData.newsletter_subscription || false}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      newsletter_subscription: e.target.checked,
+                    }))
+                  }
+                />
+                <label className="form-check-label">
+                  Iscriviti alla newsletter
+                </label>
+              </div>
 
                 {loading && <LoadingIndicator />}
 
                 <div className="d-grid">
                   <button type="submit" className="btn btn-primary">
-                    Register
+                    Registrati
                   </button>
                 </div>
 
                 <div className="mt-3 text-center">
-                  Already have an account? <Link to="/login">Log in</Link>
+                  Hai già un account? <Link to="/login">Log in</Link>
                 </div>
               </form>
             </div>
