@@ -9,5 +9,4 @@ router.register(r'events', EventViewSet, basename='events')
 
 urlpatterns = [
     path('', include(router.urls)),
-    
 ]

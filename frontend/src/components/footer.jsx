@@ -2,7 +2,7 @@
 //TODO: change the footer text
 export default function Footer() {
     return (
-        <footer className="p-5 bg-dark text-white text-center position-relative">
+        <footer className="footer p-5 text-white text-center position-relative">
             <div className="container">
                 {/* Footer Sections */}
                 <div className="row">

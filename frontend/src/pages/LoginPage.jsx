@@ -18,7 +18,7 @@ export default function LoginPage() {
     }, [navigate]);
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 login-form-container">
     <Form route="/api/token/" method="login" />
     </div>
   );

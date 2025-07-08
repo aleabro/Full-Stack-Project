@@ -43,13 +43,13 @@ export default function Form({ route, method }) {
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label className="form-label">Username or Email</label>
+                  <label className="form-label">Nome Utente or Email</label>
                   <input
                     type="text"
                     className="form-control"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username or email"
+                    placeholder="Inserisci il tuo nome utente o email"
                     autoComplete="username"
                     required
                   />
@@ -62,7 +62,7 @@ export default function Form({ route, method }) {
                     className="form-control"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder="Inserisci la tua password"
                     autoComplete={isLogin ? "current-password" : "new-password"}
                     required
                   />
@@ -79,20 +79,20 @@ export default function Form({ route, method }) {
 
               {isLogin && (
                 <div className="mt-3 text-center">
-                  <Link to="/password-recovery">Forgot your password?</Link>
+                  <Link to="/password-recovery">Hai dimenticato la password?</Link>
                 </div>
               )}
 
               <div className="mt-3 text-center">
                 {isLogin ? (
                   <>
-                    Don’t have an account?{" "}
-                    <Link to="/register-choice">Sign up</Link>
+                    Non hai ancora un account?{" "}
+                    <Link to="/register-choice">Registrati</Link>
                   </>
                 ) : (
                   <>
-                    Already have an account?{" "}
-                    <Link to="/login">Log in</Link>
+                    Hai già un account?{" "}
+                    <Link to="/login">Accedi</Link>
                   </>
                 )}
               </div>
