@@ -32,14 +32,13 @@ function LogOut() {
   - Profile: Protected route for both organization and regular users to view their profiles.
   - NotFound: Displays a 404 error page for unmatched routes.
 */
-export default function AppRoutes({ events, searchText, setSearchText }) {
+export default function AppRoutes({ events, searchText, setSearchText, filteredEvents }) {
   return (
     <Routes>
       <Route path="/" element={
         <HomePage 
           events={events} 
-          searchText={searchText} 
-          setSearchText={setSearchText} 
+          filteredEvents={filteredEvents}
         />} 
       />
       <Route path="/events/:id" element={<EventDetails />} />
@@ -52,17 +51,17 @@ export default function AppRoutes({ events, searchText, setSearchText }) {
       <Route path="/dashboard"
         element={
           <ProtectedRoute allowedRoles={['organization']}>
-            <Dashboard />
+            <Dashboard searchText={searchText} />
           </ProtectedRoute>
-        } 
+        }
       />
 
       <Route path="/favorites"
         element={
           <ProtectedRoute allowedRoles={['regular']}>
-            <Favorites />
+            <Favorites searchText={searchText} />
           </ProtectedRoute>
-        } 
+        }
       />
 
       <Route path="/profile"

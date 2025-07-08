@@ -5,5 +5,3 @@ function Register() {
 }
 
 export default Register
-
-//TODO: remove deprecated page

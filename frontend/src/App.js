@@ -28,15 +28,25 @@ function App() {
       });
   }, []);
 
+  const filteredEvents = events.filter(event =>
+    event.title.toLowerCase().includes(searchText.toLowerCase()) 
+  );
+
   if (loading) {
-    return <div>Caricamento eventi...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-50">
+        <div className="spinner-border text-primary" role="status" aria-hidden="true"></div>
+        <span className="ms-3">Caricamento eventi...</span>
+      </div>
+    );
   }
+
   
 return (
     <>
       <BrowserRouter>
         <Navbar searchText={searchText} setSearchText={setSearchText} />
-        <AppRoutes events={events} searchText={searchText} setSearchText={setSearchText} />
+        <AppRoutes events={events} filteredEvents={filteredEvents} searchText={searchText} setSearchText={setSearchText} />
       </BrowserRouter>
       <Footer />
     </>

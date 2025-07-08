@@ -23,8 +23,20 @@ useEffect(() => {
     });
 }, [id]);
 
-  if (loading) return <div>Caricamento evento...</div>;
-  if (!event) return <div>Evento non trovato</div>;
+    if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-50">
+        <div className="spinner-border text-primary" role="status" aria-hidden="true"></div>
+        <span className="ms-3">Caricamento eventi...</span>
+      </div>
+    );
+  }
+
+  if (!event)  return (
+    <div className="alert alert-info text-center mt-4">
+      <h4>Nessun evento trovato</h4>
+    </div>
+    );
 
   return (
     <EventCardGeneric

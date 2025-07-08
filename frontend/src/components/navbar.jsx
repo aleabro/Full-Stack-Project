@@ -105,6 +105,11 @@ export default function Navbar({searchText, setSearchText}) {
                         Your profile
                     </Link>
                     </li>
+                    <li>
+                    <Link className="dropdown-item" to="/organization/profile">
+                        Your profile
+                    </Link>
+                    </li>
                     {/* Check if the user is an organization */}
                     <li>
                     <Link

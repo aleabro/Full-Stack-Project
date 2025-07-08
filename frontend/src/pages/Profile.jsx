@@ -66,7 +66,13 @@ export default function Profile() {
       });
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return (    
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    );
   if (!user) return <div>Error loading profile.</div>;
 
   return (

@@ -3,10 +3,10 @@ import api from "../api";
 import {EventCardGeneric} from "../components/cards";
 import { EditButton, DeleteButton } from "../components/Buttons";
 
-export default function Dashboard() {
+export default function Dashboard({ searchText }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false); // mostra/nascondi form
+  const [showForm, setShowForm] = useState(false); 
   const [editEvent, setEditEvent] = useState(null); // evento in modifica
 
   useEffect(() => {
@@ -45,7 +45,19 @@ export default function Dashboard() {
     fetchEvents(); // aggiorna lista
   };
 
-  if (loading) return <p>Caricamento eventi...</p>;
+  const filteredEvents = events.filter(e =>
+    e.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-50">
+        <div className="spinner-border text-primary" role="status" aria-hidden="true"></div>
+        <span className="ms-3">Caricamento eventi...</span>
+      </div>
+    );
+  }
+
 
   return (
     <div className="container mt-4">
@@ -63,7 +75,7 @@ export default function Dashboard() {
       </div>
 
       <div className="row">
-        {events.map((event) => (
+        {filteredEvents.map(event => (
           <div className="col-md-4" key={event.id}>
             <EventCardGeneric event={event}>
               <EditButton onEdit={() => handleEdit(event)} />
@@ -80,32 +92,6 @@ export default function Dashboard() {
   );
 }
 
-function EventCard({ event, onEdit, onDelete }) {
-  return (
-    <div className="card mb-3">
-      <img
-        src={event.image || "https://via.placeholder.com/300x200"}
-        className="card-img-top"
-        alt={event.title}
-        style={{ height: "200px", objectFit: "cover" }}
-      />
-      <div className="card-body">
-        <h5 className="card-title">{event.title}</h5>
-        <p className="card-text">
-          <strong>Data:</strong> {new Date(event.date).toLocaleString()}
-        </p>
-        <div className="d-flex justify-content-between">
-          <button onClick={onEdit} className="btn btn-warning btn-sm">
-            Modifica
-          </button>
-          <button onClick={onDelete} className="btn btn-danger btn-sm">
-            Elimina
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function EventForm({ event, onClose }) {
   const [formData, setFormData] = useState({

@@ -20,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class OrganizationProfileSerializer(serializers.ModelSerializer):
+    logo = serializers.ImageField(required=False)
     class Meta:
         model = OrganizationProfile
         fields = ['organization_name', 'logo', 'partita_iva', 'address']
@@ -84,12 +85,14 @@ class OrganizationUpdateSerializer(serializers.ModelSerializer):
         instance.save()
 
         if org_data:
-            org_profile = instance.organization_profile
-            for attr, value in org_data.items():
-                setattr(org_profile, attr, value)
-            org_profile.save()
+            org_profile = getattr(instance, 'organization_profile', None)
+            if org_profile:
+                for attr, value in org_data.items():
+                    setattr(org_profile, attr, value)
+                org_profile.save()
 
         return instance
+
 
 # Custom Token Serializer to include user_type in the token needed for the frontend and JWT authentication
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
