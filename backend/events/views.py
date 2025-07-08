@@ -5,6 +5,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Event, Favorite
 from .serializers import EventSerializer
 from accounts.permissions import IsOrganizationUser, IsRegularUser
+from accounts.models import CustomUser
+from notifications.models import NewsletterSubscriber
+from django.core.mail import EmailMessage
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
@@ -29,7 +32,39 @@ class EventViewSet(viewsets.ModelViewSet):
         return Event.objects.all()
     # Override of the perform_create method to set the organizer of the event to the authenticated user.
     def perform_create(self, serializer):
-        serializer.save(organizer=self.request.user)
+        event=serializer.save(organizer=self.request.user)
+
+        subject = "Nuovo evento pubblicato!"
+            
+        body = (
+                f"È stato pubblicato un nuovo evento: {event.title}\n\n"
+                f"Descrizione: {event.description}\n"
+                f"Data: {event.date.strftime('%d/%m/%Y')}\n"
+                f"Ora: {event.date.strftime('%H:%M')}\n"
+                f"Luogo: {event.location}\n"
+               # f"Prezzo: {event.price} €"
+            )
+
+        user_emails = list(CustomUser.objects.filter(newsletter=True).values_list('email', flat=True))
+        anon_emails = list(NewsletterSubscriber.objects.values_list('email', flat=True))
+        all_emails = list(set(user_emails + anon_emails))
+        from_email="info@weloveevents.it"
+        all_emails = [email for email in all_emails if email and "@" in email]
+        to_emails = [from_email] 
+
+        if all_emails:
+            # Filter out any empty emails and ensure they contain '@'
+            email = EmailMessage(
+            subject=subject,
+            body=body,
+            from_email=from_email,
+            to=to_emails,
+            bcc=all_emails
+        )
+
+            if event.image:
+                email.attach_file(event.image.path)
+            email.send(fail_silently=True)
 
     # the @action decorator is used to create custom actions that can be accessed via HTTP methods.
     # In this case, we are creating a custom action to favorite an event only if the user is authenticated and a regular user.
