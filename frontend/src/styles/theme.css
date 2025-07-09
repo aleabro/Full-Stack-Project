@@ -62,7 +62,7 @@ body.dark-theme {
 
 /* Fix per la navbar-collapse di Bootstrap */
 .navbar-collapse {
-    display: flex !important;
+    /*display: flex !important;*/
     align-items: center;
     justify-content: flex-end;
 }
@@ -110,6 +110,7 @@ body.dark-theme {
 
 .nome-utente {
     color: white;
+    font-size: 2vw;
 }
 
 
@@ -135,10 +136,39 @@ body.dark-theme {
     width: 36px;
 }
 
+/* Mobile menu full-width, stesso colore, spacing */
+@media (max-width: 767.98px) {
+  /* Assicura che il .container non tagli via la collapse */
+  .navbar .container {
+    position: relative;
+  }
 
+  /* Stili per la collapse quando è “show” */
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-primary);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    z-index: 1000;
+  }
 
+  /* Spaziatura verticale fra i link */
+  .navbar-collapse .nav-item {
+    width: 100%;
+    text-align: center;     /* o left, se preferisci */
+    margin-bottom: 0.5rem;
+  }
 
-
+  /* Rendi full-width anche gli input o bottoni interni */
+  .navbar-collapse .search-input,
+  .navbar-collapse .icon-button {
+    width: calc(100% - 2rem);
+    margin: 0 auto 1rem;
+  }
+}
 
 
 

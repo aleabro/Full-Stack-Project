@@ -4,21 +4,38 @@ import Navbar from './navbar'; // o il percorso corretto del tuo componente Navb
 // ...existing code...
 
 export default function UtenteAuth() {
-    const [username, aggiorna] = useState(null);
-    const [searchText, setSearchText] = useState('');
+    const [username, aggiorna] = useState(null); //per l'utente
 
+    const [organization, setOrganization] = useState(null); //per l'organizzazione
+
+    const [organizationLogo, setOrganizationLogo] = useState(null); //per il logo dell'organizzazione
+
+
+
+    //const [searchText, setSearchText] = useState('');
+
+
+    //questo metodo si occupa di recuperare il token JWT e di fare una richiesta al backend per ottenere i dati dell'utente autenticato
+    //se il token non è presente, aggiorna lo stato dell'utente a null
     useEffect(() => {
         const aggiornaUtente = () => {
             const token = localStorage.getItem('access');
             if (!token) {
                 aggiorna(null);
+                setOrganization(null);
+                setOrganizationLogo(null);
+                console.error('Token non trovato');
                 return;
             }
             fetch('http://localhost:8000/api/profile/', {
                 headers: { Authorization: `Bearer ${token}` },
             })
-            .then(res => res.ok ? res.json() : null)
-            .then(data => aggiorna(data ? data.username : null));
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    aggiorna(data ? data.username : null);
+                    setOrganization(data ? data.organization : null);
+                    setOrganizationLogo(data?.organization_profile?.logo || null);
+                });
         };
 
         aggiornaUtente();
@@ -26,7 +43,7 @@ export default function UtenteAuth() {
         window.addEventListener('storage', aggiornaUtente);
         return () => window.removeEventListener('storage', aggiornaUtente);
     }, []);
-    
+
     /*const [username, aggiorna] = useState(null);
     const [searchText, setSearchText] = useState('');
 
@@ -61,20 +78,29 @@ export default function UtenteAuth() {
         <div>
             <h1>Benvenuto{username ? `, ${username}` : ''}!</h1>
             {/* <h1>Utente Autenticato</h1> */
-/* {statoUtente && <p>Tipo di utente: {statoUtente}</p>} */ 
-// </div>
-//);*/
-return (
-    <div>
-        <h1>{username ? ` ${username}` : ''}</h1>
-    </div>
-);
-/*return (
-        <Navbar
-            searchText={searchText}
-            setSearchText={setSearchText}
-            username={username}
-            //userType={userType}
-        />
-);*/
+    /* {statoUtente && <p>Tipo di utente: {statoUtente}</p>} */
+    // </div>
+    //);*/
+
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <h1 className="nome-utente">
+                {username ? ` ${username}` : ''}
+                {organization ? ` - ${organization}` : ''}
+            </h1>
+            {/*{organizationLogo && (
+                <img
+                    src={organizationLogo} 
+                    alt="Logo organizzazione"
+                    style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                    }}
+                />
+            )}*/}
+        </div>
+    );
+
 }

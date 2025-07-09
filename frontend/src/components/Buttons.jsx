@@ -16,6 +16,7 @@ function isUserLoggedIn() {
 }
 
 export function LikeButton({ eventId, initialIsFavorited }) {
+  
   const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);

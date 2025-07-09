@@ -4,6 +4,8 @@ import axios from "axios";
 import { LikeButton } from "../components/Buttons";
 import { EventCardGeneric2 } from "../components/cards";
 import { EventDetailView2 } from "../components/cards";
+import LoadingIndicator from "../components/LoadingIndicator";
+import MissingEvent from "../components/MissingEvent";
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -24,19 +26,28 @@ export default function EventDetails() {
       });
   }, [id]);
 
-  if (loading) return <div>Caricamento evento...</div>;
-  if (!event) return <div>Evento non trovato</div>;
+  if (loading) return <div><LoadingIndicator /></div>;
+  if (!event) return <div><MissingEvent /></div>;
+
 
   return (
-    <EventDetailView2
-      event={event}
-      className="w-100"
-      imageHeight="400px"
-      fullWidthImage
+    <div
+      className="d-flex justify-content-center align-items-center my-5 px-4"
+      style={{
+        minHeight: "80vh",
+      }}
     >
-      <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
-      <p>{event.description}</p>
-    </EventDetailView2>
-
+      <div style={{ maxWidth: "900px", width: "100%" }}>
+        <EventDetailView2
+          event={event}
+          className="w-100"
+          imageHeight="400px"
+          fullWidthImage={false}
+        >
+          <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
+        </EventDetailView2>
+      </div>
+    </div>
   );
+
 }

@@ -1,23 +1,18 @@
 import { Link } from 'react-router-dom';
 import UtenteAuth from './UtenteAuth';
-import { Moon, CircleQuestionMark, UserRound } from 'lucide-react';
+import { Moon, CircleQuestionMark, UserRound, House } from 'lucide-react';
 import DarkMode from './DarkMode';
 
 
 
 export default function Navbar({ searchText, setSearchText, username }) {
-    console.log("Navbar montato");
     return (
-        <nav className="navbar navbar-expand-md sticky-top py-3 ">
+        <nav className="navbar navbar-expand-md navbar-light sticky-top py-3 ">
             <div className="container-fluid">
                 <div className="navbar-left">
                     <Link to="/" className="navbar-brand">
                         {/* TODO: change logo */}
-                        <img
-                            src="./logo.png"
-                            alt="Logo"
-                            style={{ width: 30 }}
-                        />
+                        <House />
                     </Link>
                     <button
                         className="navbar-toggler"
@@ -143,12 +138,6 @@ export default function Navbar({ searchText, setSearchText, username }) {
                                         </Link>
                                     </li>
                                 </ul>
-
-                                {username && (
-                                    <li className="nav-item ms-3 text-white">
-                                        <span className="navbar-text">Benvenuto, {username}</span>
-                                    </li>
-                                )}
 
                             </li>
                         </ul>

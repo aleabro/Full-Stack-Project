@@ -23,6 +23,15 @@ class OrganizationProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrganizationProfile
         fields = ['organization_name', 'logo', 'partita_iva', 'address']
+"""
+def representation(self, instance):
+   # aggiunta per includere l'URL del logo ai dati mandati al frontend cosi da caricare l'immaagine profilo
+    repr = super().representation(instance)
+    request = self.context.get('request')
+    if instance.logo and request:
+        repr['logo'] = request.build_absolute_uri(instance.logo.url)
+    return repr
+"""
 
 # Separate serializer for OrganizationProfile
 class OrganizationSerializer(serializers.ModelSerializer):

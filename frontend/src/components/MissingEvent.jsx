@@ -7,10 +7,10 @@ export default function NotFound() {
         <div className="mb-4">
           <i className="bi bi-emoji-frown text-danger" style={{ fontSize: 70 }}></i>
         </div>
-        <h1 className="display-2 fw-bold text-danger mb-2">404</h1>
-        <h2 className="mb-3 text-dark">Pagina non trovata</h2>
+        <h1 className="display-2 fw-bold text-danger mb-2">Errore</h1>
+        <h2 className="mb-3 text-dark">Evento non trovato</h2>
         <p className="lead text-muted mb-4">
-          Oops! La pagina che cerchi non esiste o è stata rimossa.<br />
+          Oops! L'evento che cerchi non esiste o è stata rimossa.<br />
           Torna alla home per continuare la navigazione.
         </p>
         <Link to="/" className="btn btn-primary btn-lg shadow-sm px-4">

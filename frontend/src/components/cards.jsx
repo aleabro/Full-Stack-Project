@@ -64,61 +64,77 @@ export function EventDetailView2({
     hour: "2-digit",
     minute: "2-digit",
   });
-
   return (
-    <div className={`flex flex-row bg-white rounded-2xl shadow-md overflow-hidden max-w-4xl mx-auto ${className}`}>
-      {/* Immagine a sinistra */}
-      <div className="w-1/3 min-w-[200px] max-w-[300px] h-auto flex-shrink-0">
-        {event.image && (
-          <Link to={`/events/${event.id}`}>
-            <img
-              src={event.image}
-              alt={event.title}
-              className="object-cover w-full"
-              style={{
-                height: imageHeight,
-                objectFit: "cover",
-                width: fullWidthImage ? "100%" : undefined,
-              }}
-            />
-          </Link>
-        )}
-      </div>
-      {/* Info a destra */}
-      <div className="w-2/3 max-w-[500px] p-6 flex flex-col justify-center overflow-hidden">
-        <h2 className="text-2xl font-semibold mb-2 truncate">{event.title}</h2>
-        <hr className="border-t border-gray-300 opacity-40 my-4 w-3/4 mx-auto md:mx-0" />
-        <div className="space-y-3 text-lg text-gray-700">
-          <p className="flex items-center gap-2 justify-center md:justify-start">
+    <div className={`card flex flex-row border rounded-xl overflow-hidden shadow-md ${className}`}>
+      {event.image && (
+        <Link to={`/events/${event.id}`} className="w-2/5 min-w-[200px] max-w-[300px]">
+          <img
+            src={event.image}
+            alt={event.title}
+            className="h-full w-full object-cover"
+            style={{
+              height: imageHeight,
+              objectFit: "cover",
+              width: fullWidthImage ? "100%" : undefined,
+            }}
+          />
+        </Link>
+      )}
+
+      <div
+        className="w-3/5 p-4 flex flex-col justify-between"
+        style={{ height: imageHeight }}
+      >
+        <div>
+          <h2 className="text-2xl font-semibold truncate mb-1">{event.title}</h2>
+          <p className="cards-subtitle flex items-center gap-2 mt-0">
             <Users size={20} className="text-blue-500" />
-            <span className="truncate">{event.organizer?.username}</span>
+            <a
+              href={`/organizzazioni/${event.organizer?.id}`}
+              className="truncate text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200"
+            >
+              {event.organizer?.username}
+            </a>
           </p>
-          <p className="flex items-center gap-2 justify-center md:justify-start">
-            <MapPin size={20} className="text-rose-500" />
-            <span className="truncate">{event.location}</span>
-          </p>
-          <p className="flex items-center gap-2 justify-center md:justify-start">
-            <Calendar size={20} className="text-green-500" />
-            {dateFormatted}
-          </p>
-          <p className="flex items-center gap-2 justify-center md:justify-start">
-            <Clock size={20} className="text-yellow-500" />
-            {timeFormatted}
-          </p>
-          {/* Descrizione troncata se troppo lunga */}
-          <p className="mt-2 text-base text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">
-            {event.description && event.description.length > 150
-              ? event.description.slice(0, 150) + "..."
-              : event.description}
-          </p>
+
+          {/* Info evento */}
+          <div className="my-4">
+            <hr className="border-t border-gray-300 opacity-100 my-4 w-3/4 mx-auto" />
+            <div className="flex justify-between items-center text-gray-700 text-sm py-2">
+              <div className="flex items-center gap-4 whitespace-nowrap">
+                <Calendar size={16} className="text-green-500" />
+                <span>{dateFormatted}</span>
+                <Clock size={16} className="text-yellow-500 ml-4" />
+                <span>{timeFormatted}</span>
+              </div>
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <MapPin size={16} className="text-rose-500" />
+                <span className="truncate max-w-[200px] text-right">
+                  {event.location}
+                </span>
+              </div>
+            </div>
+            <hr className="border-t border-gray-300 opacity-100 my-4 w-3/4 mx-auto" />
+          </div>
         </div>
-        {/* Pulsanti o children */}
-        <div className="mt-6 flex justify-center md:justify-start gap-4">
-          {children}
+
+        {/* Descrizione scrollabile */}
+        <div className="relative flex-1 overflow-hidden">
+          <div className="overflow-y-auto pr-2 max-h-full relative">
+            <p className="card-text">{event.description}</p>
+            {/* Filtro sfumato in basso */}
+            <div className="pointer-events-none absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-white to-transparent"></div>
+          </div>
         </div>
+
+
+        <div className="d-flex justify-content-around">{children}</div>
       </div>
+
     </div>
   );
+
+
 }
 
 export function EventDetailView({
@@ -276,7 +292,7 @@ export function EventCardSpec({
         <p className="card-subtitle text-muted">
           {dateFormatted} | {event.organizer?.username}
         </p>
-        {<p className="card-text">{event.description}</p>}
+        <p className="card-text">{event.description}</p>
         <div className="d-flex justify-content-around">{children}</div>
       </div>
     </div>
