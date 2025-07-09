@@ -19,7 +19,7 @@ class CreateUserView(generics.CreateAPIView):
         # Se la mail era tra gli anonimi, rimuovila e attiva la newsletter
         if NewsletterSubscriber.objects.filter(email=user.email).exists():
             NewsletterSubscriber.objects.filter(email=user.email).delete()
-            user.newsletter = True
+            user.newsletter= True
             user.save()
             # Invia una mail di benvenuto
             send_mail(

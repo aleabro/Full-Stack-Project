@@ -10,7 +10,7 @@ export default function RegisterUserForm() {
     password: "",
     first_name: "",
     last_name: "",
-    newsletter_subscription: false,
+    newsletter: false,
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -76,11 +76,11 @@ export default function RegisterUserForm() {
                   className="form-check-input"
                   type="checkbox"
                   name="newsletter_subscription"
-                  checked={formData.newsletter_subscription || false}
+                  checked={formData.newsletter || false}
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      newsletter_subscription: e.target.checked,
+                      newsletter: e.target.checked,
                     }))
                   }
                 />

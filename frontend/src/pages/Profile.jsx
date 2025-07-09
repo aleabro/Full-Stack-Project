@@ -38,7 +38,7 @@ export default function Profile() {
       email: user.email,
       first_name: user.first_name || "",
       last_name: user.last_name || "",
-      newsletter_subscription: user.newsletter_subscription || false,
+      newsletter: user.newsletter || false,
     };
 
     api.put("api/profile/", payload)
@@ -135,10 +135,10 @@ export default function Profile() {
         <input
           type="checkbox"
           className="form-check-input"
-          name="newsletter_subscription"
-          checked={user.newsletter_subscription || false}
+          name="newsletter"
+          checked={user.newsletter || false}
           onChange={(e) =>
-            setUser({ ...user, newsletter_subscription: e.target.checked })
+            setUser({ ...user, newsletter: e.target.checked })
           }
           disabled={!editing}
         />
