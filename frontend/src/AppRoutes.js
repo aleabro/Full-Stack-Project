@@ -10,6 +10,7 @@ import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
+import ResetPassword from './pages/ResetPassword';
 
 function LogOut() {
   localStorage.clear();
@@ -47,6 +48,7 @@ export default function AppRoutes({ events, searchText, setSearchText }) {
       <Route path="/register-choice" element={<RegisterChoicePage />} />
       <Route path="/register-user" element={<RegisterUserPage />} />
       <Route path="/register-organization" element={<RegisterOrganizationPage />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route path="/dashboard"
         element={

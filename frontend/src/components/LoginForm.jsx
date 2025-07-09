@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function LoginForm({ onLoginSuccess, apiLoginUrl, signUpUrl, passwordRecoveryUrl }) {
   const [formData, setFormData] = useState({
@@ -71,7 +72,9 @@ export default function LoginForm({ onLoginSuccess, apiLoginUrl, signUpUrl, pass
                 <a href={signUpUrl}>Non hai un account? Registrati!</a>
               </div>
               <div className="small mt-2">
-                <a href={passwordRecoveryUrl}>Password dimenticata?</a>
+                {/*<a href={passwordRecoveryUrl}>Password dimenticata?</a>*/}
+                <Link to="/reset-password">Password dimenticata?</Link>
+
               </div>
             </div>
           </div>
