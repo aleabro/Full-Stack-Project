@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import EventViewSet
+from .views import EventViewSet, ChoicesView
 from rest_framework import routers
 
 # The router is used to automatically generate the URL patterns for the EventViewSet
@@ -9,5 +9,4 @@ router.register(r'events', EventViewSet, basename='events')
 
 urlpatterns = [
     path('', include(router.urls)),
-    
 ]

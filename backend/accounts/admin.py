@@ -9,6 +9,11 @@ Admin configuration for Users and Organization Profiles
 
 '''
 
+
+admin.site.site_header = "WeLoveEvents Admin"
+admin.site.site_title = "WeLoveEvents Admin"
+admin.site.index_title = "Benvenuto nel pannello di amministrazione WeLoveEvents"
+
 class OrganizationProfileInline(admin.StackedInline):
     model = OrganizationProfile
     verbose_name_plural = 'Profilo Organizzazione'

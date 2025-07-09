@@ -3,8 +3,10 @@ import api from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import LoadingIndicator from "./LoadingIndicator";
+import { jwtDecode } from "jwt-decode";
 
-export default function Form({ route, method }) {
+
+export default function Form({ route, method, onLoginSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,6 +24,13 @@ export default function Form({ route, method }) {
       if (isLogin) {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+        // Decodifica il token per ottenere user_type e altre info
+        const decoded = jwtDecode(res.data.access);
+        const user = {
+          username: decoded.username,
+          user_type: decoded.user_type,
+        };
+        onLoginSuccess(user);
         navigate("/");
       } else {
         navigate("/login");

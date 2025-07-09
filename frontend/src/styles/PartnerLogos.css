@@ -1,0 +1,20 @@
+.partner-logo {
+  transition: transform 0.2s;
+}
+.partner-logo:hover {
+  transform: scale(1.08);
+}
+
+.animate-scroll {
+  animation: scroll-logos 30s linear infinite;
+  will-change: transform;
+}
+
+@keyframes scroll-logos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

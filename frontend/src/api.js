@@ -7,6 +7,13 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
+        // NON aggiungere il token per le richieste di registrazione
+        if (
+            config.url.includes("/user/register") ||
+            config.url.includes("/organization/register")
+        ) {
+            return config;
+        }
         const token = localStorage.getItem(ACCESS_TOKEN);
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;

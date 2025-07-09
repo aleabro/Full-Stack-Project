@@ -16,6 +16,8 @@ export default function LoginForm({ onLoginSuccess, apiLoginUrl, signUpUrl, pass
     setError('');
     try {
       console.log('Login data:', formData);
+      const user = { username: formData.username, user_type: "regular" };
+      onLoginSuccess(user);
       alert('Login effettuato con successo! (simulato)');
     } catch (err) {
       setError('Credenziali non valide. Riprova.');

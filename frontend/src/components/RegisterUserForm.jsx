@@ -3,6 +3,12 @@ import api from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import LoadingIndicator from "./LoadingIndicator";
 
+function validatePassword(password) {
+  // Almeno 8 caratteri, una maiuscola, una minuscola, un numero e un simbolo speciale
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  return regex.test(password);
+}
+
 export default function RegisterUserForm() {
   const [formData, setFormData] = useState({
     username: "",
@@ -21,8 +27,15 @@ export default function RegisterUserForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+
+  if (!validatePassword(formData.password)) {
+    alert("La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un simbolo speciale.");
+    return;
+  }
+  setLoading(true);
+  // ...
+
     try {
       await api.post("/api/user/register/", {
         ...formData,

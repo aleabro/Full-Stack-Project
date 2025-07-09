@@ -36,3 +36,15 @@ class NewsletterViewSet(viewsets.ViewSet):
             "message": "Iscrizione avvenuta con successo!"
         }, status=status.HTTP_201_CREATED)
     
+    @action(detail=False, methods=['post'])
+    def unsubscribe(self, request):
+        email = request.data.get('email')
+        if not email:
+            return Response({"success": False, "message": "Email mancante"}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = CustomUser.objects.filter(email=email).first()
+        if user:
+            user.newsletter = False
+            user.save()
+            return Response({"success": True, "message": "Disiscrizione avvenuta con successo!"}, status=status.HTTP_200_OK)
+        

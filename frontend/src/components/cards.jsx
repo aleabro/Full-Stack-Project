@@ -1,6 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { ReadMoreButton, LikeButton } from "./Buttons";
+import style from "../styles/Cards.module.css";
 
 export function EventCardGeneric({
   event,
@@ -15,7 +15,7 @@ export function EventCardGeneric({
   });
 
   return (
-    <div className={`card mb-3 ${className}`}>
+     <div className={`card mb-3 ${style.myCard} ${className}`}>
       {event.image && (
         <Link to={`/events/${event.id}`}>
           <img
@@ -42,24 +42,26 @@ export function EventCardGeneric({
   );
 }
 
-export default function Cards({ events }) {
+
+export default function Cards({ events, user}) {
   return (
-    <section className="p-5">
-      <div className="container">
-        <div className="row text-center g-4">
-          {events.map((event) => (
-            <div className="col-md" key={event.id}>
-              <EventCardGeneric event={event}>
-                <ReadMoreButton eventId={event.id} />
-                <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
-              </EventCardGeneric>
-            </div>
-          ))}
+    <div className={style.Cards}>
+      <section className="p-5" >
+        <div className="container">
+          <div className="row text-center g-4">
+            {events.map((event) => (
+              <div className="col-md" key={event.id}>
+                <EventCardGeneric event={event}>
+                  <ReadMoreButton eventId={event.id} />
+                  {(!user || user.user_type === "regular") && (
+                    <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
+                  )}
+                </EventCardGeneric>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
-
-
-

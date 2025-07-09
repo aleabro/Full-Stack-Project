@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN } from "../constants";
 import {jwtDecode} from "jwt-decode";
 
-export default function LoginPage() {
+
+export default function LoginPage({ setUser }) {
     const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem(ACCESS_TOKEN);
@@ -19,7 +20,7 @@ export default function LoginPage() {
 
   return (
     <div className="container mt-5">
-    <Form route="/api/token/" method="login" />
+      <Form route="/api/token/" method="login" onLoginSuccess={setUser} />
     </div>
   );
 }
