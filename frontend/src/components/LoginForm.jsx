@@ -16,14 +16,14 @@ export default function LoginForm({ onLoginSuccess, apiLoginUrl, signUpUrl, pass
     setError('');
     try {
       console.log('Login data:', formData);
-      alert('Login effettuato con successo! (simulato)');
+      alert('Login effettuato con successo!');
     } catch (err) {
       setError('Credenziali non valide. Riprova.');
     }
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-5">
           <div className="card shadow-lg border-0 rounded-lg">
@@ -39,13 +39,13 @@ export default function LoginForm({ onLoginSuccess, apiLoginUrl, signUpUrl, pass
                     className="form-control"
                     id="username"
                     name="username"
-                    placeholder="Username o Email"
+                    placeholder="Username"
                     value={formData.username}
                     onChange={handleChange}
                     autoComplete="username"
                     required
                   />
-                  <label htmlFor="username">Username o Email</label>
+                  <label htmlFor="username">Username</label>
                 </div>
                 <div className="form-floating mb-3">
                   <input

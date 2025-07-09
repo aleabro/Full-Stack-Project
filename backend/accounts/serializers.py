@@ -30,10 +30,11 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     organization_profile = OrganizationProfileSerializer(required=False)
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+    newsletter_subscription = serializers.BooleanField(required=False, default=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password','organization_profile', 'user_type')
+        fields = ('username', 'email', 'password','organization_profile', 'user_type', 'newsletter_subscription')
 
     def create(self, validated_data):
         
@@ -42,7 +43,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
-            user_type='organization'
+            user_type='organization',
+            newsletter_subscription=False  # Default value for organization users
         )
         OrganizationProfile.objects.create(user=user, **profile_data)
         return user

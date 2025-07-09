@@ -18,7 +18,7 @@ export default function RegisterChoicePage() {
         }
     }, [navigate]);
   return (
-    <div className="container mt-5 text-center">
+    <div className="container mt-5 mb-5 text-center">
       <div className="card p-4 shadow mx-auto" style={{ maxWidth: 400 }}>
         <h2 className="mb-4">Choose your account type</h2>
         <Link to="/register-user" className="btn btn-primary mb-3 w-100">
