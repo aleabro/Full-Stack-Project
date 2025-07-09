@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, OrganizationProfile
+from notifications.models import NewsletterSubscriber
+from django.core.mail import send_mail
 
 ''' 
 Admin configuration for Users and Organization Profiles 
@@ -16,7 +18,7 @@ class CustomUserAdmin(UserAdmin):
 
     inlines = (OrganizationProfileInline,)
     
-    list_display = ('username', 'email', 'first_name', 'user_type', 'is_staff')
+    list_display = ('username', 'email', 'first_name', 'user_type', 'is_staff', 'newsletter_subscription')
     list_filter = ('user_type', 'is_staff', 'is_superuser', 'groups')
 
     fieldsets = UserAdmin.fieldsets + (
@@ -26,12 +28,28 @@ class CustomUserAdmin(UserAdmin):
         ('Informazioni Aggiuntive', {'fields': ('user_type',)}),
     )
 
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if obj.email:
+            if NewsletterSubscriber.objects.filter(email=obj.email).exists():
+                NewsletterSubscriber.objects.filter(email=obj.email).delete()
+                obj.newsletter = True
+                obj.save()
+
+            send_mail(
+                'Iscrizione sito WeLoveEvents',
+                'Grazie per esserti iscritto al sito WeLoveEvents!',
+                'info@weloveevents.it',
+                [obj.email],
+                fail_silently=True,
+            )
+
     def get_inline_instances(self, request, obj=None):
         if not obj or not obj.is_organization:
             return []
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
-
-
+        
 admin.site.register(CustomUser, CustomUserAdmin)
 
 @admin.register(OrganizationProfile)
