@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # add here if you want to include more fields to pass to the API
-        fields = ('id', 'username', 'email','password', 'first_name', 'last_name', 'user_type','newsletter_subscription')
+        fields = ('id', 'username', 'email','password', 'first_name', 'last_name', 'user_type','newsletter')
         read_only_fields = ('id', 'user_type')
         
 
