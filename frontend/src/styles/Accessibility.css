@@ -1,8 +1,7 @@
 
 .accessibility-mode .accordion-button:not(.collapsed){
   font-size: 1.25em !important;
-  background: #000 !important;
-  color: #fff !important;
+
 }
 
 .accessibility-mode .navbar,
@@ -17,21 +16,11 @@
 .accessibility-mode .form-control,
 .accessibility-mode .modal-content,
 .accessibility-mode .footer {
-  background: #111 !important;
-  color: #fff !important;
+
   font-size: 1.25em !important;
 }
 
-.accessibility-mode .form-control,
-.accessibility-mode input,
-.accessibility-mode textarea,
-.accessibility-mode a,
-.accessibility-mode .btn,
-.accessibility-mode .footer {
-    background: #111 !important;
-  color: #fff !important;
-  border-color: #fff !important;
-}
+
 .accessibility-mode .footer,
 .accessibility-mode .footer p,
 .accessibility-mode .footer a,
@@ -41,7 +30,4 @@
 .accessibility-mode .footer h5,
 .accessibility-mode .footer h6 {
   font-size: 1.25em !important;
-  color: #fff !important;
-      background: #111 !important;
-
 }

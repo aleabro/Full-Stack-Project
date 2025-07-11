@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="p-5 bg-dark text-white position-relative footer">
+    <footer className="footer p-5 position-relative  ">
       <div className="container">
         <div className="row justify-content-center text-center">
           {/* Social & Logo */}
@@ -25,7 +25,7 @@ export default function Footer() {
               </a>
             </div>
             <h4 className="fw-bold mb-1">WeLoveEvents Website</h4>
-            <p className="small text-muted">Scopri, partecipa e vivi i migliori eventi della tua città!</p>
+            <p className="small ">Scopri, partecipa e vivi i migliori eventi della tua città!</p>
           </div>
           {/* Link utili */}
           <div className="col-md-2 mb-4">

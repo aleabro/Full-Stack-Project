@@ -6,7 +6,7 @@ export default function PartnerLogos({ organizations }) {
 console.log("organizations:", organizations);
 
   return (
-    <section className="bg-light py-4 overflow-hidden">
+    <section className="partner-logos py-4 overflow-hidden ">
       <div className="container">
         <h5 className="text-center mb-4 text-dark">I nostri partner</h5>
         <div className="d-flex overflow-hidden">

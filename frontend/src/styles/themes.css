@@ -1,0 +1,98 @@
+:root,
+[data-bs-theme="light"] {
+  --bs-body-bg: #E3E2DF;
+  --bs-body-color: #5D001E;
+  --bs-primary: #d9708b;
+  --bs-secondary: hwb(334 24% 30%);
+  --bs-navbar-bg: #5D001E;
+  --bs-footer-bg: #5D001E;
+  --bs-card-bg: #E3AFBC;
+  --bs-newsletter-bg: #d9708b;
+  --bs-border-color: rgba(0, 0, 0, 0.2);
+  --bs-link-color: #ffffff; 
+  --bs-link-hover-color: var(--bs-primary);
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #20232a;
+  --bs-body-color: #45A29E;
+  --bs-primary: #61dafb;
+  --bs-secondary: #61dafb;
+  --bs-navbar-bg: #282c34;
+  --bs-footer-bg: #282c34;
+  --bs-card-bg: #282c34;
+  --bs-newsletter-bg: #282c34;
+  --bs-border-color: rgba(255, 255, 255, 0.2);
+  --bs-link-color: #ffffff;
+  --bs-link-hover-color: var(--bs-primary);
+}
+
+
+.navbar {
+  background-color: var(--bs-navbar-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .dropdown-item {
+  color: var(--bs-link-color) !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover,
+.navbar .dropdown-item:hover {
+  color: var(--bs-link-hover-color) !important;
+}
+
+.navbar i {
+  color: var(--bs-link-color) !important;
+}
+
+.navbar i:hover {
+  color: var(--bs-link-hover-color) !important;
+}
+
+
+.navbar .dropdown-menu {
+  background-color: var(--bs-navbar-bg) !important;
+  color: var(--bs-link-color) !important;
+  border: 1px solid var(--bs-border-color);
+}
+
+.navbar .dropdown-menu .dropdown-item {
+  color: var(--bs-link-color) !important;
+}
+
+
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-menu .dropdown-item:focus {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-body-bg) !important;
+}
+
+
+.footer {
+  background-color: var(--bs-footer-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-top: 1px solid var(--bs-border-color);
+}
+
+.footer a {
+  color: var(--bs-link-color);
+}
+
+.footer a:hover {
+  color: var(--bs-link-hover-color);
+}
+
+.footer i {
+  color: var(--bs-link-color) !important;
+}
+
+.footer i:hover {
+  color: var(--bs-link-hover-color) !important;
+}
+
+

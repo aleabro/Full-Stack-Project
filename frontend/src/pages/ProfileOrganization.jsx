@@ -99,7 +99,7 @@ export default function ProfileOrganization() {
   if (!org) return <div>Error loading profile.</div>;
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-6">
           <div className="card shadow-lg border-0">
@@ -183,12 +183,12 @@ export default function ProfileOrganization() {
                     <img src={org.organization_profile.logo} alt="Current logo" style={{ maxWidth: "200px", borderRadius: "8px" }} />
                   </div>
                 )}
-                {editing && (
+                {/* {editing && (
                   <>
                     <input type="file" name="logo" className="form-control mt-2" onChange={handleLogoChange} />
                     <small className="text-muted">Lascia vuoto per mantenere il logo attuale</small>
                   </>
-                )}
+                )} */}
               </div>
 
               <div className="mb-4">

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import DarkMode from "./DarkMode";
 
-export default function Navbar({ user, events, searchText, setSearchText }) {
+export default function Navbar({ user, events, searchText, setSearchText, toggleTheme, darkMode }) {
   const [accessibility, setAccessibility] = useState(false);
 
   const toggleAccessibility = () => {
@@ -18,7 +17,7 @@ export default function Navbar({ user, events, searchText, setSearchText }) {
   const uniqueCategories = [...new Set(futureEvents.map(e => e.category).filter(Boolean))];
 
   return (
-    <nav className="navbar navbar-expand-md bg-dark navbar-dark sticky-top py-3" >
+    <nav className="navbar navbar-expand-md sticky-top py-3" >
       <div className="container">
         <Link to="/" className="navbar-brand">
           <img src="/logo.png" alt="Logo" style={{ width: 30 }} />
@@ -37,18 +36,22 @@ export default function Navbar({ user, events, searchText, setSearchText }) {
           <form className="d-flex my-2 my-md-0 flex-grow-1 position-relative me-md-3">
             <i
               className="bi bi-search position-absolute text-muted"
-              style={{ left: "10px", top: "50%", transform: "translateY(-50%)" }}
+              style={{ left: "12px", top: "50%", transform: "translateY(-50%)" }}
             />
             <input
               type="text"
-              className="form-control ps-4"
+              className="form-control ps-5"
               placeholder="Cerca eventi"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              style={{
+                borderRadius: "50px",
+                border: "1px solid rgba(255,255,255,0.3)"
+              }}
             />
           </form>
 
-          <ul className="navbar-nav ms-md-auto align-items-md-center">
+          <ul className="navbar-nav ms-md-auto align-items-center gap-2">
             {/* Categorie */}
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -86,11 +89,12 @@ export default function Navbar({ user, events, searchText, setSearchText }) {
               </li>
             )}
 
-            
-            
-
-            <li className="nav-item"><a className="nav-link" href=""><DarkMode /></a></li>
-
+            {/* Dark Mode Toggle */}
+            <li className="nav-item">
+              <a onClick={toggleTheme} className="nav-link" title="Toggle dark mode">
+                <i className={`bi ${darkMode ? "bi-sun" : "bi-moon"} h4`}></i>
+              </a>
+            </li>
 
             <li className="nav-item"><Link to="/#FAQ" className="nav-link"><i className="bi bi-question-lg h4"></i></Link></li>
             <li className="nav-item">
@@ -100,11 +104,11 @@ export default function Navbar({ user, events, searchText, setSearchText }) {
             </li>
 
             {/* User menu */}
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                <i className="bi bi-person h4"></i>
+            <li className="nav-item dropdown d-flex align-items-center">
+              <a className="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown">
+                <i className="bi bi-person h4 mb-0"></i>
                 {user && (
-                  <span className="ms-1">
+                  <span style={{ whiteSpace: "nowrap" }}>
                     {user.user_type === "organization"
                       ? user.organization_profile?.organization_name || user.username
                       : user.username}

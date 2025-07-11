@@ -1,13 +1,15 @@
 export default function Carousel({ events }) {
   const validEvents = events.filter(e => e && e.id && e.image);
-  console.log("Valid Events:", validEvents); // DEBUG: puoi rimuovere se vuoi
 
   return (
     <div
       id="carouselExample"
-      className="carousel slide mb-4"
+      className="carousel carousel-fade mb-4 shadow-sm rounded"
       data-bs-ride={validEvents.length > 1 ? "carousel" : undefined}
-      data-bs-interval={validEvents.length > 1 ? 4000 : undefined}
+      data-bs-interval={validEvents.length > 1 ? 8000 : undefined}
+      style={{
+        backgroundColor: "#f8f9fa",
+      }}
     >
       <div className="carousel-inner">
         {validEvents.length > 0 ? (
@@ -16,10 +18,8 @@ export default function Carousel({ events }) {
               key={event.id}
               className={`carousel-item ${index === 0 ? "active" : ""}`}
               style={{
-                height: 500,
-                maxHeight: 500,
+                maxHeight: 300,
                 overflow: "hidden",
-                backgroundColor: "#000", // Previene vuoti durante animazioni
               }}
             >
               <a href={`/events/${event.id}`}>
@@ -28,9 +28,8 @@ export default function Carousel({ events }) {
                   className="d-block w-100 mx-auto"
                   alt={event.title}
                   style={{
-                    height: 500,
+                    height: 300,
                     objectFit: "cover",
-                    transition: "opacity 0.5s ease-in-out",
                   }}
                 />
               </a>
@@ -40,36 +39,41 @@ export default function Carousel({ events }) {
           <div
             className="carousel-item active"
             style={{
-              height: 500,
+              maxHeight: 300,
               overflow: "hidden",
-              backgroundColor: "#000",
             }}
           >
             <img
-              src="/static/homepage/images/default.jpg"
+              src="default.jpg"
               className="d-block w-100 mx-auto"
               alt="Default"
-              style={{ height: 500, objectFit: "cover" }}
+              style={{
+                height: 300,
+                objectFit: "cover",
+              }}
             />
-            <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-              <h5>Nessun evento disponibile</h5>
-              <p>Rimani aggiornato, nuovi eventi in arrivo!</p>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Nessun evento</h5>
+              <p>Nuovi eventi in arrivo torna presto!</p>
             </div>
           </div>
         )}
       </div>
 
-      {/* Controls e Indicators solo se più di 1 evento */}
+      
       {validEvents.length > 1 && (
         <>
-          {/* Controls */}
           <button
             className="carousel-control-prev"
             type="button"
             data-bs-target="#carouselExample"
             data-bs-slide="prev"
           >
-            <span className="carousel-control-prev-icon" aria-hidden="true" />
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+              style={{ filter: "invert(1)" }}
+            />
             <span className="visually-hidden">Previous</span>
           </button>
           <button
@@ -78,24 +82,13 @@ export default function Carousel({ events }) {
             data-bs-target="#carouselExample"
             data-bs-slide="next"
           >
-            <span className="carousel-control-next-icon" aria-hidden="true" />
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+              style={{ filter: "invert(1)" }}
+            />
             <span className="visually-hidden">Next</span>
           </button>
-
-          {/* Indicators */}
-          <div className="carousel-indicators">
-            {validEvents.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                data-bs-target="#carouselExample"
-                data-bs-slide-to={index}
-                className={index === 0 ? "active" : ""}
-                aria-current={index === 0 ? "true" : undefined}
-                aria-label={`Slide ${index + 1}`}
-              />
-            ))}
-          </div>
         </>
       )}
     </div>

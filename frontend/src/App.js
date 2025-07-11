@@ -7,6 +7,8 @@ import Footer from './components/footer';
 import AppRoutes from './AppRoutes';
 import { ACCESS_TOKEN } from './constants';  
 import "./styles/Accessibility.css"; 
+import "./styles/themes.css";
+
 
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [organizations, setOrganizations] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
 
   
   // State for search text
@@ -59,6 +62,21 @@ useEffect(() => {
     event.title.toLowerCase().includes(searchText.toLowerCase()) 
   );
 
+useEffect(() => {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.body.setAttribute("data-bs-theme", savedTheme);
+  setDarkMode(savedTheme === "dark");
+}, []);
+
+const toggleTheme = () => {
+  const newTheme = darkMode ? "light" : "dark";
+  document.body.setAttribute("data-bs-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+  setDarkMode(!darkMode);
+};
+
+
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-50">
@@ -71,7 +89,7 @@ useEffect(() => {
 return (
     <>
       <BrowserRouter>
-        <Navbar user={user} events={events} searchText={searchText} setSearchText={setSearchText} />
+        <Navbar user={user} events={events} searchText={searchText} setSearchText={setSearchText} toggleTheme={toggleTheme} darkMode={darkMode} />
         <AppRoutes events={events} setEvents={setEvents} filteredEvents={filteredEvents} searchText={searchText} setSearchText={setSearchText} user={user} setUser={setUser} organizations={organizations} />
         <Footer />
       </BrowserRouter>

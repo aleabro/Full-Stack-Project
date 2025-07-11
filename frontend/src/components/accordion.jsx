@@ -1,6 +1,6 @@
 export default function Accordion() {
     return (
-        <section id="FAQ" className="p-5">
+        <section id="FAQ" className="faq-section p-5">
         <div className="container">
             <h2 className="text-center mb-4">FAQ</h2>
             <div className="accordion accordion-flush" id="questions">
