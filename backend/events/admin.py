@@ -39,7 +39,7 @@ class EventAdmin(admin.ModelAdmin):
                 #f"Prezzo: {obj.price} €"
             )
 
-            user_emails = list(CustomUser.objects.filter(newsletter=True).values_list('email', flat=True))
+            user_emails = list(CustomUser.objects.filter(newsletter_subscription=True).values_list('email', flat=True))
             anon_emails = list(NewsletterSubscriber.objects.values_list('email', flat=True))
             all_emails = list(set(user_emails + anon_emails))
             from_email="info@weloveevents.it"

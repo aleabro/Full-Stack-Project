@@ -3,7 +3,6 @@ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { EditButton, DeleteButton, SaveButton, CancelButton } from "../components/Buttons";
 
-//TODO: fix the logo upload 
 export default function ProfileOrganization() {
   const [org, setOrg] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,12 +30,12 @@ export default function ProfileOrganization() {
   const handleChange = e => {
     const [key, subkey] = e.target.name.split(".");
     if (subkey) {
-      setOrg({ 
-        ...org, 
-        organization_profile: { 
-          ...org.organization_profile, 
-          [subkey]: e.target.value 
-        } 
+      setOrg({
+        ...org,
+        organization_profile: {
+          ...org.organization_profile,
+          [subkey]: e.target.value
+        }
       });
     } else {
       setOrg({ ...org, [key]: e.target.value });
@@ -67,7 +66,7 @@ export default function ProfileOrganization() {
       .then(() => {
         setEditing(false);
         alert("Profile updated!");
-        fetchProfile(); // reload data
+        fetchProfile();
       })
       .catch(err => {
         console.error(err);
@@ -82,7 +81,7 @@ export default function ProfileOrganization() {
       .then(() => {
         localStorage.clear();
         navigate("/register-choice");
-        window.location.reload(); // hard reload after delete
+        window.location.reload();
       })
       .catch(err => {
         console.error(err);
@@ -90,81 +89,137 @@ export default function ProfileOrganization() {
       });
   };
 
-  if (loading) return (    
+  if (loading) return (
     <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
       <div className="spinner-border text-primary" role="status">
         <span className="visually-hidden">Loading...</span>
       </div>
     </div>
-    );
+  );
   if (!org) return <div>Error loading profile.</div>;
 
   return (
-    <div className="container mt-4">
-      <h2>Organization Profile</h2>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="card shadow-lg border-0">
+            <div className="card-body p-4">
+              <div className="d-flex align-items-center mb-4">
+                <i className="bi bi-building fs-1 text-primary me-3"></i>
+                <h2 className="mb-0 fw-bold">Profilo organizzazione</h2>
+              </div>
 
-      <div className="mb-3">
-        <label>Username</label>
-        <input className="form-control" name="username" value={org.username} onChange={handleChange} disabled={!editing} />
-      </div>
+              <div className="mb-3">
+                <label className="form-label fw-semibold">
+                  <i className="bi bi-person-fill me-2"></i>Username
+                </label>
+                <input
+                  className="form-control"
+                  name="username"
+                  value={org.username}
+                  onChange={handleChange}
+                  disabled={!editing}
+                />
+              </div>
 
-      <div className="mb-3">
-        <label>Email</label>
-        <input className="form-control" name="email" value={org.email} onChange={handleChange} disabled={!editing} />
-      </div>
+              <div className="mb-3">
+                <label className="form-label fw-semibold">
+                  <i className="bi bi-envelope-fill me-2"></i>Email
+                </label>
+                <input
+                  className="form-control"
+                  name="email"
+                  value={org.email}
+                  onChange={handleChange}
+                  disabled={!editing}
+                />
+              </div>
 
-      <div className="mb-3">
-        <label>Organization Name</label>
-        <input className="form-control" name="organization_profile.organization_name" value={org.organization_profile.organization_name || ""} onChange={handleChange} disabled={!editing} />
-      </div>
+              <div className="mb-3">
+                <label className="form-label fw-semibold">
+                  <i className="bi bi-building me-2"></i>Nome organizzazione
+                </label>
+                <input
+                  className="form-control"
+                  name="organization_profile.organization_name"
+                  value={org.organization_profile.organization_name || ""}
+                  onChange={handleChange}
+                  disabled={!editing}
+                />
+              </div>
 
-      <div className="mb-3">
-        <label>Partita IVA</label>
-        <input className="form-control" name="organization_profile.partita_iva" value={org.organization_profile.partita_iva || ""} onChange={handleChange} disabled={!editing} />
-      </div>
+              <div className="mb-3">
+                <label className="form-label fw-semibold">
+                  <i className="bi bi-123 me-2"></i>Partita IVA
+                </label>
+                <input
+                  className="form-control"
+                  name="organization_profile.partita_iva"
+                  value={org.organization_profile.partita_iva || ""}
+                  onChange={handleChange}
+                  disabled={!editing}
+                />
+              </div>
 
-      <div className="mb-3">
-        <label>Address</label>
-        <input className="form-control" name="organization_profile.address" value={org.organization_profile.address || ""} onChange={handleChange} disabled={!editing} />
-      </div>
+              <div className="mb-3">
+                <label className="form-label fw-semibold">
+                  <i className="bi bi-geo-alt-fill me-2"></i>Indirizzo
+                </label>
+                <input
+                  className="form-control"
+                  name="organization_profile.address"
+                  value={org.organization_profile.address || ""}
+                  onChange={handleChange}
+                  disabled={!editing}
+                />
+              </div>
 
-    <div className="mb-3">
-      <label>Logo</label>
-      {org.organization_profile.logo && (
-        <div>
-          <img src={org.organization_profile.logo} alt="Current logo" style={{ maxWidth: "200px" }} />
+              <div className="mb-3">
+                <label className="form-label fw-semibold">
+                  <i className="bi bi-image me-2"></i>Logo
+                </label>
+                {org.organization_profile.logo && (
+                  <div className="mb-2">
+                    <img src={org.organization_profile.logo} alt="Current logo" style={{ maxWidth: "200px", borderRadius: "8px" }} />
+                  </div>
+                )}
+                {editing && (
+                  <>
+                    <input type="file" name="logo" className="form-control mt-2" onChange={handleLogoChange} />
+                    <small className="text-muted">Lascia vuoto per mantenere il logo attuale</small>
+                  </>
+                )}
+              </div>
+
+              <div className="mb-4">
+                <label className="form-label fw-semibold">
+                  <i className="bi bi-award-fill me-2"></i>Tipo utente
+                </label>
+                <input
+                  className="form-control"
+                  value={org.user_type}
+                  disabled
+                />
+              </div>
+
+              <div className="d-flex gap-2">
+                {!editing ? (
+                  <EditButton onEdit={() => setEditing(true)} />
+                ) : (
+                  <>
+                    <SaveButton onSave={handleSave} />
+                    <CancelButton onCancel={() => {
+                      setEditing(false);
+                      fetchProfile();
+                    }} />
+                  </>
+                )}
+                <DeleteButton onDelete={handleDelete} />
+              </div>
+              
+            </div>
+          </div>
         </div>
-      )}
-      {editing && (
-        <>
-          <input type="file" name="logo" className="form-control mt-2" onChange={handleLogoChange} />
-          <small className="text-muted">Leave empty to keep the current logo</small>
-        </>
-      )}
-    </div>
-
-      <div className="mb-3">
-        <label>User Type</label>
-        <input
-          className="form-control"
-          value={org.user_type}
-          disabled
-        />
-      </div>
-
-      <div>
-        {!editing ? (
-          <EditButton onEdit={() => setEditing(true)} />
-        ) : (
-          <>
-            <SaveButton onSave={handleSave} />
-            <CancelButton onCancel={() => {
-              setEditing(false);
-              fetchProfile(); // reload original data if canceled
-            }} />
-          </>
-        )}
-        <DeleteButton onDelete={handleDelete} />
       </div>
     </div>
   );

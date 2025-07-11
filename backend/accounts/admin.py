@@ -9,6 +9,11 @@ Admin configuration for Users and Organization Profiles
 
 '''
 
+
+admin.site.site_header = "WeLoveEvents Admin"
+admin.site.site_title = "WeLoveEvents Admin"
+admin.site.index_title = "Benvenuto nel pannello di amministrazione WeLoveEvents"
+
 class OrganizationProfileInline(admin.StackedInline):
     model = OrganizationProfile
     verbose_name_plural = 'Profilo Organizzazione'
@@ -34,7 +39,7 @@ class CustomUserAdmin(UserAdmin):
         if obj.email:
             if NewsletterSubscriber.objects.filter(email=obj.email).exists():
                 NewsletterSubscriber.objects.filter(email=obj.email).delete()
-                obj.newsletter = True
+                obj.newsletter_subscription = True
                 obj.save()
 
             send_mail(

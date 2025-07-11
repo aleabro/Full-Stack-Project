@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Event, Favorite
 from .serializers import EventSerializer
@@ -8,6 +9,7 @@ from accounts.permissions import IsOrganizationUser, IsRegularUser
 from accounts.models import CustomUser
 from notifications.models import NewsletterSubscriber
 from django.core.mail import EmailMessage
+from .choices import PROVINCE_CHOICES, CATEGORY_CHOICES
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
@@ -45,7 +47,7 @@ class EventViewSet(viewsets.ModelViewSet):
                # f"Prezzo: {event.price} €"
             )
 
-        user_emails = list(CustomUser.objects.filter(newsletter=True).values_list('email', flat=True))
+        user_emails = list(CustomUser.objects.filter(newsletter_subscription=True).values_list('email', flat=True))
         anon_emails = list(NewsletterSubscriber.objects.values_list('email', flat=True))
         all_emails = list(set(user_emails + anon_emails))
         from_email="info@weloveevents.it"
@@ -96,3 +98,10 @@ class EventViewSet(viewsets.ModelViewSet):
         events = self.get_queryset()
         serializer = self.get_serializer(events, many=True)
         return Response(serializer.data)
+
+class ChoicesView(APIView):
+    def get(self, request):
+        return Response({
+            "province": PROVINCE_CHOICES,
+            "categorie": CATEGORY_CHOICES,
+        })

@@ -58,7 +58,7 @@ export default function Profile() {
     setUser(originalUser);
     setEditing(false);
   };
-
+  
   const handleDelete = () => {
     if (!window.confirm("Are you sure you want to delete your account?")) return;
 
@@ -84,52 +84,67 @@ export default function Profile() {
   if (!user) return <div>Error loading profile.</div>;
 
   return (
-    <div className="container mt-4">
-      <h2>Il mio profilo</h2>
+  <div className="container mt-5">
+    <div className="row justify-content-center">
+      <div className="col-12 col-md-8 col-lg-6">
+        <div className="card shadow-lg border-0">
+          <div className="card-body p-4">
+            <div className="d-flex align-items-center mb-4">
+              <i className="bi bi-person-circle fs-1 text-primary me-3"></i>
+              <h2 className="mb-0 fw-bold">Il mio profilo</h2>
+            </div>
 
-      <div className="mb-3">
-        <label>Username</label>
-        <input
-          className="form-control"
-          name="username"
-          value={user.username}
-          onChange={handleChange}
-          disabled={!editing}
-        />
-      </div>
+            <div className="mb-3">
+              <label className="form-label fw-semibold">
+                <i className="bi bi-person-fill me-2"></i>Username
+              </label>
+              <input
+                className="form-control"
+                name="username"
+                value={user.username}
+                onChange={handleChange}
+                disabled={!editing}
+              />
+            </div>
 
-      <div className="mb-3">
-        <label>Email</label>
-        <input
-          className="form-control"
-          name="email"
-          value={user.email}
-          onChange={handleChange}
-          disabled={!editing}
-        />
-      </div>
+            <div className="mb-3">
+              <label className="form-label fw-semibold">
+                <i className="bi bi-envelope-fill me-2"></i>Email
+              </label>
+              <input
+                className="form-control"
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+                disabled={!editing}
+              />
+            </div>
 
-      <div className="mb-3">
-        <label>First Name</label>
-        <input
-          className="form-control"
-          name="first_name"
-          value={user.first_name || ""}
-          onChange={handleChange}
-          disabled={!editing}
-        />
-      </div>
+            <div className="mb-3">
+              <label className="form-label fw-semibold">
+                <i className="bi bi-person-vcard me-2"></i>Nome
+              </label>
+              <input
+                className="form-control"
+                name="first_name"
+                value={user.first_name || ""}
+                onChange={handleChange}
+                disabled={!editing}
+              />
+            </div>
 
-      <div className="mb-3">
-        <label>Last Name</label>
-        <input
-          className="form-control"
-          name="last_name"
-          value={user.last_name || ""}
-          onChange={handleChange}
-          disabled={!editing}
-        />
-      </div>
+            <div className="mb-3">
+              <label className="form-label fw-semibold">
+                <i className="bi bi-person-vcard me-2"></i>Cognome
+              </label>
+              <input
+                className="form-control"
+                name="last_name"
+                value={user.last_name || ""}
+                onChange={handleChange}
+                disabled={!editing}
+              />
+            </div>
 
       <div className="mb-3 form-check">
         <input
@@ -147,26 +162,35 @@ export default function Profile() {
         </label>
       </div>
 
-      <div className="mb-3">
-        <label>User Type</label>
-        <input
-          className="form-control"
-          value={user.user_type}
-          disabled
-        />
-      </div>
+            <div className="mb-4">
+              <label className="form-label fw-semibold">
+                <i className="bi bi-award-fill me-2"></i>Tipo utente
+              </label>
+              <input
+                className="form-control"
+                value={user.user_type}
+                disabled
+              />
+            </div>
 
-      <div>
-        {!editing ? (
-          <EditButton onEdit={() => setEditing(true)} />
-        ) : (
-          <>
-            <SaveButton onSave={handleSave} />
-            <CancelButton onCancel={handleCancel} />
-          </>
-        )}
-        <DeleteButton onDelete={handleDelete} />
+            <div className="d-flex gap-2">
+              {!editing ? (
+                <>
+                  <EditButton onEdit={() => setEditing(true)} />
+                </>
+              ) : (
+                <>
+                  <SaveButton onSave={handleSave} />
+                  <CancelButton onCancel={handleCancel} />
+                </>
+              )}
+              <DeleteButton onDelete={handleDelete} />
+            </div>
+            
+          </div>
+        </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib import admin
 from accounts.models import CustomUser 
+from .choices import PROVINCE_CHOICES, CATEGORY_CHOICES
 
 '''
 Event has a ForeignKey to the Organizer that created it'''
@@ -18,8 +19,20 @@ class Event(models.Model):
     image = models.ImageField(upload_to='event_images/', blank=True, null=True)
     date = models.DateTimeField("Event Date")
     location = models.CharField(max_length=300)
+    provincia = models.CharField(
+        max_length=100,
+        choices=PROVINCE_CHOICES,
+        blank=True,
+        null=True
+    )
+    category = models.CharField(
+        max_length=100,
+        choices=CATEGORY_CHOICES,
+        blank=True,
+        null=True
+    )
+    price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    # Add other fields as needed, such as category
 
     def __str__(self):
         return self.title

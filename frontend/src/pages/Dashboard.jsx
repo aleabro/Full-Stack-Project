@@ -3,14 +3,20 @@ import api from "../api";
 import {EventCardGeneric} from "../components/cards";
 import { EditButton, DeleteButton } from "../components/Buttons";
 
-export default function Dashboard({ searchText }) {
-  const [events, setEvents] = useState([]);
+export default function Dashboard({ searchText, events, setEvents}) {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false); 
   const [editEvent, setEditEvent] = useState(null); // evento in modifica
+  const [provinceChoices, setProvinceChoices] = useState([]);
+  const [categoryChoices, setCategoryChoices] = useState([]);
 
   useEffect(() => {
     fetchEvents();
+    api.get("/api/choices/").then(res => {
+      console.log("Province and categories fetched:", res.data);
+      setProvinceChoices(res.data.province || []);
+      setCategoryChoices(res.data.categorie || []);
+    });
   }, []);
 
   const fetchEvents = async () => {
@@ -74,6 +80,7 @@ export default function Dashboard({ searchText }) {
         </button>
       </div>
 
+      
       <div className="row">
         {filteredEvents.map(event => (
           <div className="col-md-4" key={event.id}>
@@ -84,21 +91,23 @@ export default function Dashboard({ searchText }) {
           </div>
         ))}
       </div>
-
+      
       {showForm && (
-        <EventForm event={editEvent} onClose={handleFormClose} />
-      )}
-    </div>
+        <EventForm event={editEvent} onClose={handleFormClose} provinceChoices={provinceChoices} categoryChoices={categoryChoices}/>
+      )}    </div>
   );
 }
 
 
-function EventForm({ event, onClose }) {
+function EventForm({ event, onClose, provinceChoices, categoryChoices }) {
   const [formData, setFormData] = useState({
     title: event?.title || "",
     description: event?.description || "",
-    date: event?.date || "",
+    date: event?.date ? event.date.slice(0, 16) : "",
     location: event?.location || "",
+    provincia: event?.provincia || "",
+    category: event?.category || "",
+    price: event?.price || "",
     image: null,
   });
 
@@ -130,6 +139,19 @@ function EventForm({ event, onClose }) {
       alert("Errore durante il salvataggio");
     }
   };
+
+  function getNowLocalISO() {
+  const now = new Date();
+  now.setSeconds(0, 0); // azzera i secondi e millisecondi
+  const tzOffset = -now.getTimezoneOffset();
+  const diff = tzOffset >= 0 ? '+' : '-';
+  const pad = n => String(Math.floor(Math.abs(n))).padStart(2, '0');
+  return now.getFullYear() +
+    '-' + pad(now.getMonth() + 1) +
+    '-' + pad(now.getDate()) +
+    'T' + pad(now.getHours()) +
+    ':' + pad(now.getMinutes());
+}
 
   return (
     <div className="card mt-4">
@@ -165,6 +187,7 @@ function EventForm({ event, onClose }) {
               value={formData.date}
               onChange={handleChange}
               required
+              min={getNowLocalISO()}
             />
           </div>
           <div className="mb-3">
@@ -187,6 +210,48 @@ function EventForm({ event, onClose }) {
               onChange={handleChange}
             />
           </div>
+         <div className="mb-3">
+            <label className="form-label">Provincia</label>
+            <select
+              name="provincia"
+              className="form-control"
+              value={formData.provincia}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Seleziona provincia</option>
+              {provinceChoices.map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Categoria</label>
+            <select
+              name="category"
+              className="form-control"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Seleziona categoria</option>
+              {categoryChoices.map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+  </select>
+</div>
+   <div className="mb-3">
+    <label className="form-label">Prezzo</label>
+    <input
+      type="number"
+      name="price"
+      className="form-control"
+      value={formData.price}
+      onChange={handleChange}
+      min="0"
+      step="0.01"
+    />
+  </div>
           <div className="d-flex justify-content-between">
             <button type="submit" className="btn btn-success">
               {event ? "Salva Modifiche" : "Crea"}

@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from accounts.views import  CustomTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
+from events.views import ChoicesView
 
 
 urlpatterns = [
@@ -14,7 +15,7 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('notifications.urls')),
-    
+    path('api/choices/', ChoicesView.as_view(), name='choices'),  
 ]
 
 # Needed to avoid 404 errors for media files during development

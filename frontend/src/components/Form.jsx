@@ -4,30 +4,45 @@ import { useNavigate, Link } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import LoadingIndicator from "./LoadingIndicator";
 
-export default function Form({ route, method }) {
+export default function Form({ route, method, onLoginSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   const isLogin = method === "login";
   const title = isLogin ? "Login" : "Register";
 
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
+    setLoading(true);
+    setErrorMsg("");
 
     try {
       const res = await api.post(route, { username, password });
       if (isLogin) {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+
+        const profileRes = await api.get("/api/profile/", {
+          headers: {
+            Authorization: `Bearer ${res.data.access}`
+          }
+        });
+        onLoginSuccess(profileRes.data);
+
         navigate("/");
       } else {
         navigate("/login");
       }
     } catch (error) {
-      alert(error);
+      console.error(error);
+      if (error.response?.status === 401 || error.response?.status === 400) {
+        setErrorMsg("Username o password errati.");
+      } else {
+        setErrorMsg("Si è verificato un errore. Riprova.");
+      }
     } finally {
       setLoading(false);
     }
@@ -41,6 +56,12 @@ export default function Form({ route, method }) {
             <div className="card-body">
               <h2 className="text-center mb-4">{title}</h2>
 
+              {errorMsg && (
+                <div className="alert alert-danger text-center">
+                  {errorMsg}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label className="form-label">Username</label>
@@ -49,7 +70,7 @@ export default function Form({ route, method }) {
                     className="form-control"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
+                    placeholder="Inserisci username"
                     autoComplete="username"
                     required
                   />
@@ -62,7 +83,7 @@ export default function Form({ route, method }) {
                     className="form-control"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder="Inserisci la password"
                     autoComplete={isLogin ? "current-password" : "new-password"}
                     required
                   />
@@ -77,22 +98,16 @@ export default function Form({ route, method }) {
                 </div>
               </form>
 
-              {isLogin && (
-                <div className="mt-3 text-center">
-                  <Link to="/password-recovery">Forgot your password?</Link>
-                </div>
-              )}
-
               <div className="mt-3 text-center">
                 {isLogin ? (
                   <>
-                    Don’t have an account?{" "}
-                    <Link to="/register-choice">Sign up</Link>
+                    Non hai un account?{" "}
+                    <Link to="/register-choice">Registrati</Link>
                   </>
                 ) : (
                   <>
-                    Already have an account?{" "}
-                    <Link to="/login">Log in</Link>
+                    Hai già un account?{" "}
+                    <Link to="/login">Login</Link>
                   </>
                 )}
               </div>

@@ -11,9 +11,14 @@ import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import ProfileOrganization from './pages/ProfileOrganization';
+import PrivacyPolicy from './pages/PrivacyPage';
+import OrganizationPage from './pages/OrganizationPage';
+import ProvinciaPage from './pages/ProvinciaPage';
+import CategoriaPage from './pages/CategoriaPage';
 
-function LogOut() {
+function LogOut({setUser}) {
   localStorage.clear();
+  setUser(null);
   return <Navigate to="/login" />;
 }
 /*
@@ -32,26 +37,47 @@ function LogOut() {
   - Profile: Protected route for both organization and regular users to view their profiles.
   - NotFound: Displays a 404 error page for unmatched routes.
 */
-export default function AppRoutes({ events, searchText, setSearchText, filteredEvents }) {
+export default function AppRoutes({ events, setEvents, searchText, setSearchText, filteredEvents, user, setUser, organizations }) {
   return (
     <Routes>
       <Route path="/" element={
         <HomePage 
           events={events} 
           filteredEvents={filteredEvents}
-        />} 
-      />
+          user={user}
+          organizations={organizations}
+        />
+      } />
       <Route path="/events/:id" element={<EventDetails />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/logout" element={<LogOut />} />
+      <Route path="/login" element={<LoginPage setUser={setUser}/>} />
+      <Route path="/logout" element={<LogOut setUser={setUser}/>} />
       <Route path="/register-choice" element={<RegisterChoicePage />} />
       <Route path="/register-user" element={<RegisterUserPage />} />
       <Route path="/register-organization" element={<RegisterOrganizationPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/organization/:id" element={<OrganizationPage />} />
+
+      <Route path="/province/:provincia" element={
+        <ProvinciaPage 
+          events={events} 
+          searchText={searchText} 
+          setSearchText={setSearchText}
+        />
+      } />
+
+      <Route path="/categorie/:categoria" element={
+        <CategoriaPage 
+          events={events} 
+          searchText={searchText} 
+          setSearchText={setSearchText}
+        />
+      } />
+
 
       <Route path="/dashboard"
         element={
           <ProtectedRoute allowedRoles={['organization']}>
-            <Dashboard searchText={searchText} />
+            <Dashboard searchText={searchText} events={events} setEvents={setEvents} filteredEvents={filteredEvents} />
           </ProtectedRoute>
         }
       />
@@ -71,7 +97,7 @@ export default function AppRoutes({ events, searchText, setSearchText, filteredE
           </ProtectedRoute>
         } 
       />
-            <Route path="/organization/profile"
+        <Route path="/organization/profile"
         element={
           <ProtectedRoute allowedRoles={['organization']}>
             <ProfileOrganization />
