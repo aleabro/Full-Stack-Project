@@ -30,7 +30,7 @@ export default function EventDetails() {
   if (!event) return <div><MissingEvent /></div>;
 
 
-  return (
+  /*return (
     <div
       className="d-flex justify-content-center align-items-center my-5 px-4"
       style={{
@@ -48,6 +48,22 @@ export default function EventDetails() {
         </EventDetailView2>
       </div>
     </div>
-  );
-
+  );*/
+  return (
+    <div>
+      <div>
+        <EventDetailView2
+          event={event}
+          className="w-100"
+          imageHeight="400px"
+          fullWidthImage={false}
+        >
+          <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
+        </EventDetailView2>
+      </div>
+    </div>
+  )
 }
+
+
+

@@ -35,20 +35,6 @@ body.dark-theme {
 }
 
 
-
-.navbar1 {
-    background-color: var(--color-primary);
-    justify-content: space-between;
-    /* Spaziatura orizzontale */
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-    /* 🔁 Altezza fissa = coerenza */
-    box-sizing: border-box;
-    padding: 1rem;
-    color: var(--color-text);
-}
-
 .navbar {
     display: flex;
     align-items: center;

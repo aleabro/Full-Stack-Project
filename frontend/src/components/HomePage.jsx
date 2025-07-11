@@ -64,6 +64,11 @@ export default function HomePage({ events, searchText, setSearchText }) {
       <Carousel events={events} />
       <SortEvents sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
+      <div className="container-fluid w-100 " style={{ width: "100%" }}>
+        <hr className="border-t border-gray-300 opacity-100" />
+        <h1 className="fs-1 text-center p-2 text-2xl font-bolder" style={{ fontSize: "48px" }}>Ultime Novità</h1>
+        <hr className="border-t border-gray-300 opacity-100 shadow" />
+      </div>
 
       <Cards events={currentEvents} />
 

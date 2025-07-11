@@ -7,43 +7,36 @@ import DarkMode from './DarkMode';
 
 export default function Navbar({ searchText, setSearchText, username }) {
     return (
-        <nav className="navbar navbar-expand-md navbar-light sticky-top py-3 ">
+        <nav className="navbar shadow-sm navbar-expand-md navbar-light sticky-top py-3 ">
             <div className="container-fluid">
-                <div className="navbar-left">
                     <Link to="/" className="navbar-brand">
                         {/* TODO: change logo */}
                         <House />
                     </Link>
                     <button
-                        className="navbar-toggler"
+                        className="navbar-toggler ms-auto"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navmenu"
                     >
                         <span className="navbar-toggler-icon" />
                     </button>
-                </div>
-                <div className="collapse navbar-collapse" id="navmenu">
-
-                    <div className="navbar-right">
+                <div className="collapse navbar-collapse" id="navmenu">                    
                         {/* ms is for margin start auto and in this example pushes the li elements to the right*/}
                         {/* TODO: remove ms-auto if you want to change columns */}
-                        <ul className="navbar-nav ">
+                        <ul className="navbar-nav d-flex">
                             {/* Search bar */}
                             <input
-                                className="search-input form-control me-2 rounded-pill"
+                                className="form-control mx-2 rounded-pill d-flex order-4 order-md-0 px-3"
                                 type="search"
-                                placeholder="Search events"
+                                placeholder="Cerca eventi..."
                                 aria-label="Search"
                                 value={searchText}
                                 onChange={(e) => setSearchText(e.target.value)}
                             />
-
-                            <li className="nav-item dropdown">
-                            </li>
-                            <li className="nav-item dropdown">
+                            <li className="nav-item dropdown order-1 order-md-0">
                                 <a
-                                    className="nav-link dropdown-toggle nav-localita"
+                                    className="nav-link dropdown-toggle"
                                     href="#"
                                     role="button"
                                     data-bs-toggle="dropdown"
@@ -64,26 +57,24 @@ export default function Navbar({ searchText, setSearchText, username }) {
                                     </li>
                                 </ul>
                             </li>
-                            <li className="nav-item nav-localita">
-                                <Link to="/favorites" className="nav-link nav-localita">
+                            <li className="nav-item order-1 order-md-0">
+                                <Link to="/favorites" className="nav-link">
                                     <i>Salvati</i>
                                 </Link>
                             </li>
                             {/* TODO: add multilanguage support */}
                             <li className="nav-item">
                                 {/* TODO: add icon moon fill when in dark mode add darkmode*/}
-                                <a href="#" className="nav-link icon-button">
+                                <a href="#" className="nav-link">
                                     <DarkMode icon={<Moon />} />
-                                    {/* <i className="bi bi-moon h3 icon-button" /> */}
                                 </a>
                             </li>
                             <li className="nav-item">
                                 <a href="#FAQ" className="nav-link">
                                     <CircleQuestionMark />
-                                    {/*<i className="bi bi-question-lg h3" />*/}
                                 </a>
                             </li>
-                            <li className='nome-utente' ><UtenteAuth /></li>
+                            <li className='nav-item text-center pt-1' ><UtenteAuth /></li>
                             <li className="nav-item dropdown">
                                 <a
                                     className="nav-link dropdown-toggle"
@@ -141,9 +132,9 @@ export default function Navbar({ searchText, setSearchText, username }) {
 
                             </li>
                         </ul>
-                    </div>
                 </div>
             </div>
         </nav>
     );
 }
+

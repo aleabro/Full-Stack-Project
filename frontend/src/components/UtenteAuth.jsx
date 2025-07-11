@@ -73,18 +73,11 @@ export default function UtenteAuth() {
         fetchUserType();
         
     }, []);*/
-
-    /*return (
-        <div>
-            <h1>Benvenuto{username ? `, ${username}` : ''}!</h1>
-            {/* <h1>Utente Autenticato</h1> */
-    /* {statoUtente && <p>Tipo di utente: {statoUtente}</p>} */
-    // </div>
     //);*/
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <h1 className="nome-utente">
+            <h1 className="nome-utente" style={{ fontSize: '16px', fontWeight: 'bold' }}>
                 {username ? ` ${username}` : ''}
                 {organization ? ` - ${organization}` : ''}
             </h1>
