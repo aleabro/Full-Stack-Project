@@ -1,19 +1,33 @@
 import { Link } from "react-router-dom";
 import api from "../api";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export function ReadMoreButton({ eventId }) {
   return (
     <Link to={`/events/${eventId}`} className="btn btn-primary">
       Read More
     </Link>
- );
+  );
 }
 
-//TODO: Fix the button fill style when the event is favorited and the page is refreshed
 export function LikeButton({ eventId, initialIsFavorited }) {
   const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
   const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+    async function fetchFavoriteStatus() {
+      try {
+        const res = await api.get(`api/events/${eventId}/is_favorited/`);
+        setIsFavorited(res.data.is_favorited);
+      } catch (err) {
+        setIsFavorited(initialIsFavorited); // fallback
+      }
+    }
+    fetchFavoriteStatus();
+    // eslint-disable-next-line
+  }, [eventId]);
+
 
   const toggleFavorite = async () => {
     if (loading) return; // Prevent multiple clicks while loading
@@ -44,6 +58,9 @@ export function LikeButton({ eventId, initialIsFavorited }) {
     </button>
   );
 }
+
+
+
 
 export function EditButton({ onEdit }) {
   return (

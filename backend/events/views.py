@@ -27,6 +27,14 @@ class EventViewSet(viewsets.ModelViewSet):
             return [IsAuthenticated(), IsOrganizationUser()]
         return super().get_permissions()
 
+    
+    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
+    def is_favorited(self, request, pk=None):
+        event = self.get_object()
+        user = request.user
+        is_favorited = Favorite.objects.filter(user=user, event=event).exists()
+        return Response({'is_favorited': is_favorited})
+
     # Override of the get_queryset method to filter events based on the action.
     def get_queryset(self):
         if self.action in ['update', 'partial_update', 'destroy', 'my_events']:

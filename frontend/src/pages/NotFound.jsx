@@ -12,4 +12,3 @@ export default function NotFound() {
 }
 
 
-// TODO: add a little bit of style to this page

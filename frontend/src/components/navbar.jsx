@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import DarkMode from "./DarkMode";
 
 export default function Navbar({ user, events, searchText, setSearchText }) {
   const [accessibility, setAccessibility] = useState(false);
@@ -85,8 +86,12 @@ export default function Navbar({ user, events, searchText, setSearchText }) {
               </li>
             )}
 
-            {/* Altre icone */}
-            <li className="nav-item"><a className="nav-link" href="#"><i className="bi bi-moon h4"></i></a></li>
+            
+            
+
+            <li className="nav-item"><a className="nav-link" href=""><DarkMode /></a></li>
+
+
             <li className="nav-item"><Link to="/#FAQ" className="nav-link"><i className="bi bi-question-lg h4"></i></Link></li>
             <li className="nav-item">
               <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); toggleAccessibility(); }}>

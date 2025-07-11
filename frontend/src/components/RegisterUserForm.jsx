@@ -3,6 +3,7 @@ import api from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import LoadingIndicator from "./LoadingIndicator";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import axios from "axios";
 
 export default function RegisterUserForm() {
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ export default function RegisterUserForm() {
 
     setLoading(true);
     try {
-      await api.post("api/user/register/", {
+      await axios.post("api/user/register/", {
         username: formData.username,
         email: formData.email,
         password: formData.password,

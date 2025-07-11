@@ -41,7 +41,7 @@ export default function Favorites({ searchText }) {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-5 mb-5">
       <h2>I tuoi eventi preferiti</h2>
       <div className="row">
         {filteredFavorites.map(event => (
