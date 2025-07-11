@@ -86,14 +86,14 @@ export default function RegisterUserForm() {
         <div className="col-md-6">
           <div className="card shadow">
             <div className="card-body">
-              <h2 className="text-center mb-4">Register as User</h2>
+              <h2 className="text-center mb-4">Registrati come utente</h2>
 
               <form onSubmit={handleSubmit}>
                 {[
                   { name: "username", placeholder: "Username" },
                   { name: "email", placeholder: "your@email.com" },
-                  { name: "first_name", placeholder: "Nome" },
-                  { name: "last_name", placeholder: "Cognome" },
+                  { name: "Nome", placeholder: "Nome" },
+                  { name: "Cognome", placeholder: "Cognome" },
                 ].map((field) => (
                   <div className="mb-3" key={field.name}>
                     <label className="form-label text-capitalize">
@@ -167,7 +167,7 @@ export default function RegisterUserForm() {
                 </div>
 
                 <div className="mt-3 text-center">
-                  Hai già un account? <Link to="/login">Log in</Link>
+                  Hai già un account? <Link to="/login">Accedi</Link>
                 </div>
               </form>
             </div>

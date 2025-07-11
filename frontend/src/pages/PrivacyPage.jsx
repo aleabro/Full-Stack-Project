@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function PrivacyPolicy() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="container py-5" style={{ maxWidth: 900 }}>
       <div className="bg-white rounded shadow p-4 p-md-5 mx-auto" style={{ borderLeft: "6px solid #444" }}>
@@ -19,7 +22,7 @@ export default function PrivacyPolicy() {
           <div className="bg-light rounded p-3">
             <strong>Events Website</strong><br />
             Via Branze, 42 - Brescia<br />
-            Email: <a href="mailto:info@eventswebsite.com">info@eventswebsite.com</a>
+            Email: <a href="mailto:info@eventswebsite.com">info@weloveevents.com</a>
           </div>
         </section>
 
@@ -95,7 +98,7 @@ export default function PrivacyPolicy() {
             <li>Revocare il consenso in qualsiasi momento.</li>
           </ul>
           <div className="alert alert-secondary mt-3" role="alert">
-            Per esercitare i tuoi diritti scrivi a: <a href="mailto:info@eventswebsite.com">info@eventswebsite.com</a>
+            Per esercitare i tuoi diritti scrivi a: <a href="mailto:info@weloveevents.com">info@weloveevents.com</a>
           </div>
         </section>
 

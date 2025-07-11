@@ -104,7 +104,7 @@ export default function RegisterOrganizationForm() {
         <div className="col-md-6">
           <div className="card shadow">
             <div className="card-body">
-              <h2 className="text-center mb-4">Register as Organization</h2>
+              <h2 className="text-center mb-4">Registrati come organizzazione</h2>
 
               {errorMsg && (
                 <div className="alert alert-danger text-center">{errorMsg}</div>

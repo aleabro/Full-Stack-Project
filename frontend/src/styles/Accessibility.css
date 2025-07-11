@@ -20,6 +20,12 @@
   font-size: 1.25em !important;
 }
 
+.accessibility-mode .partner-logo {
+  transform: scale(1.25) !important;
+}
+
+
+
 
 .accessibility-mode .footer,
 .accessibility-mode .footer p,

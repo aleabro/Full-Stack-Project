@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/Newsletter.css";
 
 export default function Newsletter({
   user,
@@ -18,6 +19,7 @@ export default function Newsletter({
   if (isOrganization) return null;
   
 console.log("isNewsletterSubscribed:", isNewsletterSubscribed);
+console.log("newsletterMessage:", newsletterMessage);
 
   return (
 <section className="newsletter py-2">
@@ -44,7 +46,7 @@ console.log("isNewsletterSubscribed:", isNewsletterSubscribed);
                     </form>
                   ) : (
                     <button
-                      className="btn btn-success fw-bold px-4"
+                      className="btn btn-success fw-bold btn-sm px-4"
                       type="button"
                       onClick={() => onSubscribe(user.email)}
                     >
@@ -53,11 +55,11 @@ console.log("isNewsletterSubscribed:", isNewsletterSubscribed);
                   )
                 ) : (
                   <div className="d-flex align-items-center gap-2">
-                    <span className="badge bg-success fs-6 py-2 px-3">
+                    <button className="btn btn-success fw-bold btn-sm px-4" disabled>
                       <i className="bi bi-check2-circle me-1"></i> Sei già iscritto!
-                    </span>
+                    </button>
                     <button
-                      className="btn btn-outline-light btn-sm ms-2 btn-danger"
+                      className="btn btn-sm ms-2 btn-unsubscribe"
                       onClick={() => onUnsubscribe(user?.email)}
                       type="button"
                     >
@@ -66,12 +68,6 @@ console.log("isNewsletterSubscribed:", isNewsletterSubscribed);
                   </div>
                 )}
               </div>
-              {newsletterMessage && (
-                <div className="alert alert-success mt-3 mb-0 text-center fw-semibold shadow-sm">
-                  <i className="bi bi-info-circle-fill me-2"></i>
-                  {newsletterMessage}
-                </div>
-              )}
             </div>
 
   </section>

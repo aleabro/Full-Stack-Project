@@ -6,7 +6,7 @@ import { useEffect } from "react";
 export function ReadMoreButton({ eventId }) {
   return (
     <Link to={`/events/${eventId}`} className="btn btn-primary">
-      Read More
+      Leggi di più
     </Link>
   );
 }
@@ -51,7 +51,7 @@ export function LikeButton({ eventId, initialIsFavorited }) {
       className={`btn ${isFavorited ? 'btn-danger' : 'btn-outline-danger'}`}
       onClick={toggleFavorite}
       disabled={loading}
-      title={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+      title={isFavorited ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'}
     >
       <i className={`bi ${isFavorited ? 'bi-heart-fill' : 'bi-heart'}`} />
       {loading && <span className="spinner-border spinner-border-sm ms-2" />}
@@ -90,7 +90,7 @@ export function SaveButton({ onSave }) {
 export function CancelButton({ onCancel }) {
   return (
     <button onClick={onCancel} className="btn btn-secondary btn-sm me-2">
-      Cancel
+      Annulla
     </button>
   );
 }

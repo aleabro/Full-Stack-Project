@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import UserSerializer, OrganizationSerializer, CustomTokenObtainPairSerializer, UserUpdateSerializer, OrganizationUpdateSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from notifications.models import NewsletterSubscriber
+from django.core.mail import send_mail
 
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
@@ -21,8 +22,6 @@ class ChangePasswordView(APIView):
         user.set_password(new_password)
         user.save()
         return Response({"success": "Password changed successfully"}, status=status.HTTP_200_OK)
-
-from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -99,3 +98,12 @@ class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny] 
+
+
+# View to list all organizations
+class OrganizationListView(generics.ListAPIView):
+    serializer_class = OrganizationSerializer
+    permission_classes = [AllowAny]
+    
+    def get_queryset(self):
+        return User.objects.filter(user_type='organization')

@@ -2,13 +2,22 @@ from .models import CustomUser as User
 from .models import OrganizationProfile
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+class OrganizationProfileSerializer(serializers.ModelSerializer):
+    logo = serializers.ImageField(required=False)
+    class Meta:
+        model = OrganizationProfile
+        fields = ['organization_name', 'logo', 'partita_iva', 'address']
+
 # Serializers for regular Users only
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+    organization_profile = OrganizationProfileSerializer(read_only=True)
+    
     class Meta:
         model = User
         # add here if you want to include more fields to pass to the API
-        fields = ('id', 'username', 'email','password', 'first_name', 'last_name', 'user_type','newsletter_subscription')
+        fields = ('id', 'username', 'email','password', 'first_name', 'last_name', 'user_type','newsletter_subscription', 'organization_profile')
         read_only_fields = ('id', 'user_type')
         
 
@@ -19,20 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class OrganizationProfileSerializer(serializers.ModelSerializer):
-    logo = serializers.ImageField(required=False)
-    class Meta:
-        model = OrganizationProfile
-        fields = ['organization_name', 'logo', 'partita_iva', 'address']
-"""
-def representation(self, instance):
-   # aggiunta per includere l'URL del logo ai dati mandati al frontend cosi da caricare l'immaagine profilo
-    repr = super().representation(instance)
-    request = self.context.get('request')
-    if instance.logo and request:
-        repr['logo'] = request.build_absolute_uri(instance.logo.url)
-    return repr
-"""
 
 # Separate serializer for OrganizationProfile
 class OrganizationSerializer(serializers.ModelSerializer):

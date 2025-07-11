@@ -92,11 +92,11 @@ export default function ProfileOrganization() {
   if (loading) return (
     <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
       <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading...</span>
+        <span className="visually-hidden">Caricamento...</span>
       </div>
     </div>
   );
-  if (!org) return <div>Error loading profile.</div>;
+  if (!org) return <div>Errore nel caricamento del profilo.</div>;
 
   return (
     <div className="container mt-5 mb-5">

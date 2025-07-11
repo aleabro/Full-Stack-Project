@@ -119,19 +119,19 @@ export default function Navbar({ user, events, searchText, setSearchText, toggle
                 {!user && (
                   <>
                     <li><Link to="/login" className="dropdown-item">Login</Link></li>
-                    <li><Link to="/register-choice" className="dropdown-item">Signup</Link></li>
+                    <li><Link to="/register-choice" className="dropdown-item">Registrati</Link></li>
                   </>
                 )}
                 {user?.user_type === "regular" && (
                   <>
-                    <li><Link className="dropdown-item" to="/profile">Your Profile</Link></li>
-                    <li><Link className="dropdown-item" to="/favorites">Your Favorites</Link></li>
+                    <li><Link className="dropdown-item" to="/profile">Il tuo profilo</Link></li>
+                    <li><Link className="dropdown-item" to="/favorites">I tuoi preferiti</Link></li>
                   </>
                 )}
                 {user?.user_type === "organization" && (
                   <>
-                    <li><Link className="dropdown-item" to="/organization/profile">Your Profile</Link></li>
-                    <li><Link className="dropdown-item" to="/dashboard">Your Events</Link></li>
+                    <li><Link className="dropdown-item" to="/organization/profile">Il tuo profilo</Link></li>
+                    <li><Link className="dropdown-item" to="/dashboard">I tuoi eventi</Link></li>
                   </>
                 )}
                 {user && (

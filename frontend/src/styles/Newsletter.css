@@ -1,0 +1,81 @@
+/* Animazioni per il messaggio della newsletter */
+@keyframes slideUpFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  90% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.newsletter-message {
+  animation: slideUpFromBottom 2s ease-in-out forwards;
+}
+
+/* Overlay sopra il carosello */
+.newsletter-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.newsletter-overlay-message {
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  animation: slideUpFromBottom 2s ease-in-out forwards;
+}
+
+.newsletter-overlay-message.success {
+  background-color: rgba(40, 167, 69, 0.9);
+}
+
+.newsletter-overlay-message.unsubscribe {
+  background-color: rgba(220, 53, 69, 0.9);
+}
+
+/* Bottone disiscrizione trasparente */
+.btn-unsubscribe {
+  background-color: transparent !important;
+  border: 1px solid rgba(220, 53, 69, 0.5) !important;
+  color: rgba(220, 53, 69, 0.8) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-unsubscribe:hover {
+  background-color: rgba(220, 53, 69, 0.9) !important;
+  border-color: rgba(220, 53, 69, 0.9) !important;
+  color: white !important;
+}
+
+/* Stili aggiuntivi per migliorare l'effetto */
+.newsletter-message-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-message {
+  position: relative;
+  width: 100%;
+}

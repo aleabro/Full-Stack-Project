@@ -1,4 +1,4 @@
-import Cards from "./cards";
+import CardsWithPastEvents from "./CardsWithPastEvents";
 import Accordion from "./accordion";
 import Newsletter from "./newsletter";
 import Carousel from "./carousel";
@@ -7,6 +7,7 @@ import PartnerLogos from "./PartnerLogos";
 import { useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
 import { getCategories, getProvinces, getOrganizations, getSortedEvents } from "../pages/EventFilter";
+import "../styles/Newsletter.css";
 
 
 
@@ -33,6 +34,16 @@ export default function HomePage({ events, filteredEvents, user, organizations})
   useEffect(() => {
     setIsNewsletterSubscribed(user?.newsletter_subscription);
   }, [user]);
+
+  useEffect(() => {
+    if (newsletterMessage) {
+      const timer = setTimeout(() => {
+        setNewsletterMessage("");
+      }, 2000); // 2 secondi per coincidere con l'animazione CSS
+
+      return () => clearTimeout(timer);
+    }
+  }, [newsletterMessage]);
 
 useEffect(() => {
     if (location.hash === "#FAQ") {
@@ -84,16 +95,30 @@ const handleUnsubscribe = async (email) => {
 
   return (
     <>
-    {(!user || !organizations) && (
+    {(!user || (user && user.user_type === "regular")) && (
       <Newsletter
         user={user}
+        isOrganization={user?.user_type === "organization"}
+        isNewsletterSubscribed={isNewsletterSubscribed}
         onSubscribe={handleSubscribe} 
         onUnsubscribe={handleUnsubscribe}
         newsletterMessage={newsletterMessage} 
       />
     )}
 
-      <Carousel events={events} />
+      <div style={{ position: 'relative' }}>
+        <Carousel events={events} />
+        
+        {/* Overlay messaggio newsletter sopra il carosello */}
+        {newsletterMessage && (
+          <div className="newsletter-overlay">
+            <div className={`newsletter-overlay-message ${newsletterMessage.includes("Iscrizione") ? "success" : "unsubscribe"}`}>
+              <i className="bi bi-check-circle-fill me-2"></i>
+              {newsletterMessage.includes("Iscrizione") ? "Grazie per esserti iscritto alla newsletter!" : "Ti sei disiscritto dalla newsletter!"}
+            </div>
+          </div>
+        )}
+      </div>
       
       <Sorted
         user={user}
@@ -103,7 +128,7 @@ const handleUnsubscribe = async (email) => {
         provinces={provinces}
         organizations={organizationsList}
       />
-      <Cards events={sortedFutureEvents} user={user} />
+      <CardsWithPastEvents events={sortedFutureEvents} user={user} />
       <PartnerLogos organizations={organizations} />
       <Accordion />
       
