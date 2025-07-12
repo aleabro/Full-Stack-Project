@@ -1,6 +1,6 @@
 :root,
 [data-bs-theme="light"] {
-  --bs-body-bg: #E3E2DF;
+  --bs-body-bg: #e3e3e3;
   --bs-body-color: #be3c65;
   --bs-primary: #d9708b;
   --bs-secondary: hwb(334 24% 30%);
@@ -24,7 +24,7 @@
   --bs-card-bg: #282c34;
   --bs-newsletter-bg: #282c34;
   --bs-border-color: rgba(255, 255, 255, 0.2);
-  --bs-link-color: #ffffff;
+  --bs-link-color: #6194fb;
   --bs-link-hover-color: var(--bs-primary);
   --bs-button-bg: #277f97;
 }
@@ -136,5 +136,6 @@
   border-color: var(--bs-button-bg) !important;
   color: #ffffff !important;
 }
+
 
 
