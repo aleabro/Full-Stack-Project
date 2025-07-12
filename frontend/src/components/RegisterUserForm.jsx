@@ -92,8 +92,8 @@ export default function RegisterUserForm() {
                 {[
                   { name: "username", placeholder: "Username" },
                   { name: "email", placeholder: "your@email.com" },
-                  { name: "Nome", placeholder: "Nome" },
-                  { name: "Cognome", placeholder: "Cognome" },
+                  { name: "first_name", placeholder: "Nome" },
+                  { name: "last_name", placeholder: "Cognome" },
                 ].map((field) => (
                   <div className="mb-3" key={field.name}>
                     <label className="form-label text-capitalize">
