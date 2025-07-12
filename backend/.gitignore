@@ -1,3 +1,4 @@
-./env
+/env
+/venv
 backend/local_auth.py
 /backend/media/

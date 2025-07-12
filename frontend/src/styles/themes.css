@@ -136,6 +136,15 @@
   border-color: var(--bs-button-bg) !important;
   color: #ffffff !important;
 }
+body {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+.newsletter {
+  background-color: var(--bs-newsletter-bg);
+  color: var(--bs-body-color);
+}
 
 
 
