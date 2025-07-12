@@ -45,7 +45,7 @@ class CustomUserAdmin(UserAdmin):
             send_mail(
                 'Iscrizione sito WeLoveEvents',
                 'Grazie per esserti iscritto al sito WeLoveEvents!',
-                'info@weloveevents.it',
+                'weloveevents00@gmail.com',
                 [obj.email],
                 fail_silently=True,
             )

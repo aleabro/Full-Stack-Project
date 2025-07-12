@@ -18,19 +18,40 @@ class CreateUserView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        # Se la mail era tra gli anonimi, rimuovila e attiva la newsletter
-        if NewsletterSubscriber.objects.filter(email=user.email).exists():
-            NewsletterSubscriber.objects.filter(email=user.email).delete()
-            user.newsletter_subscription= True
-            user.save()
-            # Invia una mail di benvenuto
-            send_mail(
-            'Iscrizione sito WeLoveEvents',
-            'Grazie per esserti iscritto al sito WeLoveEvents!',
-            'info@weloveevents.it',
+        
+        # Invia sempre una mail di benvenuto
+        send_mail(
+            'Benvenuto su WeLoveEvents',
+            'Grazie per esserti registrato al sito WeLoveEvents! Ora puoi accedere a tutte le funzionalità del nostro sito.',
+            'weloveevents00@gmail.com',
             [user.email],
             fail_silently=True,
         )
+        
+        # Se l'utente si è iscritto alla newsletter, invia anche la mail di conferma newsletter
+        if user.newsletter_subscription:
+            send_mail(
+                'Iscrizione newsletter',
+                'Grazie per esserti iscritto alla nostra newsletter!',
+                'weloveevents00@gmail.com',
+                [user.email],
+                fail_silently=True,
+            )
+        
+        # Se la mail era tra gli anonimi, rimuovila e attiva la newsletter
+        if NewsletterSubscriber.objects.filter(email=user.email).exists():
+            NewsletterSubscriber.objects.filter(email=user.email).delete()
+            if not user.newsletter_subscription:
+                user.newsletter_subscription = True
+                user.save()
+                # Invia la mail di conferma newsletter se non era già iscritto
+                send_mail(
+                    'Iscrizione newsletter',
+                    'Grazie per esserti iscritto alla nostra newsletter!',
+                    'weloveevents00@gmail.com',
+                    [user.email],
+                    fail_silently=True,
+                )
 
     def get_object(self):
         return self.request.user
@@ -40,6 +61,18 @@ class CreateOrganizationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = OrganizationSerializer
     permission_classes = [AllowAny]
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        
+        # Invia sempre una mail di benvenuto
+        send_mail(
+            'Benvenuto su WeLoveEvents',
+            'Grazie per aver registrato la tua organizzazione su WeLoveEvents! Ora puoi iniziare a creare e gestire i tuoi eventi.',
+            'weloveevents00@gmail.com',
+            [user.email],
+            fail_silently=True,
+        )
 
     def get_object(self):
         return self.request.user
@@ -53,6 +86,35 @@ class CreateOrganizationView(generics.CreateAPIView):
 class ProfileView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserUpdateSerializer
+
+    def perform_update(self, serializer):
+        # Salva lo stato precedente della newsletter
+        old_newsletter_status = self.get_object().newsletter_subscription
+        
+        # Salva l'utente con i nuovi dati
+        user = serializer.save()
+        
+        # Controlla se lo stato della newsletter è cambiato
+        new_newsletter_status = user.newsletter_subscription
+        
+        if old_newsletter_status and not new_newsletter_status:
+            # L'utente si è disiscritto dalla newsletter
+            send_mail(
+                'Disiscrizione newsletter',
+                'La tua disiscrizione dalla newsletter è stata confermata. Ci dispiace vederti andare!',
+                'weloveevents00@gmail.com',
+                [user.email],
+                fail_silently=True,
+            )
+        elif not old_newsletter_status and new_newsletter_status:
+            # L'utente si è iscritto alla newsletter
+            send_mail(
+                'Iscrizione newsletter',
+                'Grazie per esserti iscritto alla nostra newsletter!',
+                'weloveevents00@gmail.com',
+                [user.email],
+                fail_silently=True,
+            )
 
     def get_object(self):
         return self.request.user
