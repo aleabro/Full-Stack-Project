@@ -62,7 +62,7 @@ export default function Cards({ events, user }) {
         <div className="container">
           <div className="row g-4">
             {events.map((event) => (
-              <div className="col-md-4 d-flex" key={event.id}>
+              <div className="col-md-5 d-flex" key={event.id}>
                 <EventCardGeneric event={event}>
                   <ReadMoreButton eventId={event.id} />
                   {user && user.user_type === "regular" && (

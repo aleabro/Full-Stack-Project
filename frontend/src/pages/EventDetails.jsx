@@ -41,7 +41,7 @@ export default function EventDetails({ user }) {
   return (
     <div>
       <div>
-        <EventDetailView2
+        <EventDetailView
           event={event}
           className="w-100"
           imageHeight="400px"
@@ -50,13 +50,13 @@ export default function EventDetails({ user }) {
           {user && user.user_type === "regular" && (
             <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
           )}
-        </EventDetailView2>
+        </EventDetailView>
       </div>
     </div>
   )
 }
 
-function EventDetailView2({
+function EventDetailView({
   event,
   children,
   className = "",
@@ -90,13 +90,7 @@ function EventDetailView2({
                   src={event.image}
                   alt={event.title}
                   className="img-fluid w-100 h-100"
-                  style={{ 
-                    height: imageHeight,
-                    objectFit: "contain",
-                    borderRadius: "0.5rem",
-                    minHeight: "300px",
-                    backgroundColor: "#f8f9fa"
-                  }}
+                  style={{ height : imageHeight }}
                 />
               </div>
             )}
