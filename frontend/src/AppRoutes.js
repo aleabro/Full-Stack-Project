@@ -48,7 +48,7 @@ export default function AppRoutes({ events, setEvents, searchText, setSearchText
           organizations={organizations}
         />
       } />
-      <Route path="/events/:id" element={<EventDetails />} />
+      <Route path="/events/:id" element={<EventDetails user={user} />} />
       <Route path="/login" element={<LoginPage setUser={setUser}/>} />
       <Route path="/logout" element={<LogOut setUser={setUser}/>} />
       <Route path="/register-choice" element={<RegisterChoicePage />} />

@@ -9,6 +9,8 @@ export default function Dashboard({ searchText, events, setEvents}) {
   const [editEvent, setEditEvent] = useState(null); // evento in modifica
   const [provinceChoices, setProvinceChoices] = useState([]);
   const [categoryChoices, setCategoryChoices] = useState([]);
+  const [pastEvents, setPastEvents] = useState([]);
+  const [showPastEvents, setShowPastEvents] = useState(false);
 
   useEffect(() => {
     fetchEvents();
@@ -55,6 +57,16 @@ export default function Dashboard({ searchText, events, setEvents}) {
     e.title.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  // Filtro eventi futuri e passati
+  const now = new Date();
+  const futureEvents = filteredEvents.filter(e => new Date(e.date) > now);
+  const pastEventsList = filteredEvents.filter(e => new Date(e.date) < now);
+
+  const loadPastEvents = () => {
+    setPastEvents(pastEventsList);
+    setShowPastEvents(true);
+  };
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-50">
@@ -66,7 +78,7 @@ export default function Dashboard({ searchText, events, setEvents}) {
 
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-5 mb-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>I tuoi eventi</h2>
         <button
@@ -80,9 +92,12 @@ export default function Dashboard({ searchText, events, setEvents}) {
         </button>
       </div>
 
-      
+      {showForm && (
+        <EventForm event={editEvent} onClose={handleFormClose} provinceChoices={provinceChoices} categoryChoices={categoryChoices}/>
+      )}
+
       <div className="row">
-        {filteredEvents.map(event => (
+        {futureEvents.map(event => (
           <div className="col-md-4" key={event.id}>
             <EventCardGeneric event={event}>
               <EditButton onEdit={() => handleEdit(event)} />
@@ -91,10 +106,47 @@ export default function Dashboard({ searchText, events, setEvents}) {
           </div>
         ))}
       </div>
+
+      {/* Bottone per eventi passati */}
+      {pastEventsList.length > 0 && (
+        <div className="text-center mt-5">
+          {!showPastEvents ? (
+            <button 
+              className="btn btn-outline-primary btn-lg"
+              onClick={loadPastEvents}
+            >
+              Visualizza I Tuoi Eventi Passati
+            </button>
+          ) : (
+            <button 
+              className="btn btn-outline-secondary btn-lg"
+              onClick={() => setShowPastEvents(false)}
+            >
+              Nascondi Eventi Passati
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Eventi passati */}
+      {showPastEvents && pastEvents.length > 0 && (
+        <div className="mt-4">
+          <hr className="my-4" />
+          <h3 className="text-center text-muted mb-4">I Tuoi Eventi Passati</h3>
+          <div className="row" style={{ opacity: 0.75 }}>
+            {pastEvents.map(event => (
+              <div className="col-md-4" key={`past-${event.id}`}>
+                <EventCardGeneric event={event}>
+                  <EditButton onEdit={() => handleEdit(event)} />
+                  <DeleteButton onDelete={() => handleDelete(event.id)} />
+                </EventCardGeneric>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       
-      {showForm && (
-        <EventForm event={editEvent} onClose={handleFormClose} provinceChoices={provinceChoices} categoryChoices={categoryChoices}/>
-      )}    </div>
+    </div>
   );
 }
 
@@ -134,6 +186,7 @@ function EventForm({ event, onClose, provinceChoices, categoryChoices }) {
         await api.post("/api/events/", data);
       }
       onClose();
+      window.location.reload(true); // hard reload to refresh events
     } catch (err) {
       console.error(err);
       alert("Errore durante il salvataggio");

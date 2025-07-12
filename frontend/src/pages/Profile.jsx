@@ -77,14 +77,14 @@ export default function Profile() {
   if (loading) return (    
     <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
       <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading...</span>
+        <span className="visually-hidden">Caricamento...</span>
       </div>
     </div>
     );
-  if (!user) return <div>Error loading profile.</div>;
+  if (!user) return <div>Errore nel caricamento del profilo.</div>;
 
   return (
-  <div className="container mt-5">
+  <div className="container mt-5 mb-5">
     <div className="row justify-content-center">
       <div className="col-12 col-md-8 col-lg-6">
         <div className="card shadow-lg border-0">

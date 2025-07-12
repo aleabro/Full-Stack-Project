@@ -38,6 +38,12 @@ function App() {
   }, []);
 
   useEffect(() => {
+    axios.get("/api/organizations/")
+      .then((response) => setOrganizations(response.data))
+      .catch((error) => console.error("Errore nel fetch delle organization:", error));
+  }, []);
+
+  useEffect(() => {
   axios.get("/api/users/?user_type=organization")
     .then((response) => setOrganizations(response.data))
     .catch((error) => console.error("Errore nel fetch delle organization:", error));

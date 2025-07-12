@@ -4,7 +4,7 @@ import axios from "axios";
 import { LikeButton } from "../components/Buttons";
 import {Link} from "react-router-dom";
 
-export default function EventDetails() {
+export default function EventDetails({ user }) {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,7 +47,9 @@ export default function EventDetails() {
           imageHeight="400px"
           fullWidthImage={false}
         >
-          <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
+          {user && user.user_type === "regular" && (
+            <LikeButton eventId={event.id} initialIsFavorited={event.is_favorited} />
+          )}
         </EventDetailView2>
       </div>
     </div>
@@ -83,14 +85,20 @@ function EventDetailView2({
         <div className="row align-items-stretch">
           <div className="col-12 col-md-4 mb-3 mb-md-0">
             {event.image && (
-              <Link to={`/events/${event.id}`} className="d-block h-100">
+              <div className="h-100">
                 <img
                   src={event.image}
                   alt={event.title}
-                  className="img-fluid w-100 h-100 object-fit-cover"
-                  style={{ height: imageHeight }}
+                  className="img-fluid w-100 h-100"
+                  style={{ 
+                    height: imageHeight,
+                    objectFit: "contain",
+                    borderRadius: "0.5rem",
+                    minHeight: "300px",
+                    backgroundColor: "#f8f9fa"
+                  }}
                 />
-              </Link>
+              </div>
             )}
           </div>
           <div className="col-12 col-md-8 d-flex flex-column">
@@ -101,12 +109,19 @@ function EventDetailView2({
                 </div>
                 <div className="d-flex align-items-center ps-2 mb-3">
                   
-                  <a
-                    href={`/organizzazioni/${event.organizer?.id}`}
-                    className="text-decoration-none text-body"
+                  <Link
+                    to={`/organization/${event.organizer?.id}`}
+                    className="text-decoration-none"
+                    style={{ 
+                      color: 'inherit', 
+                      transition: 'opacity 0.2s ease' 
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.7'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    title={`Scopri di più su ${event.organizer?.organization_profile?.organization_name || event.organizer?.username}`}
                   >
-                    {event.organizer?.username}
-                  </a>
+                    {event.organizer?.organization_profile?.organization_name || event.organizer?.username}
+                  </Link>
                 </div>
               </div>
               <div className="col-md-4 align-self-center  " >
@@ -128,7 +143,7 @@ function EventDetailView2({
                 </div>
                 <div className="col-12 mb-2">
                   <strong>Prezzo:</strong>{" "}
-                  {event.price != null ? `${event.price} €` : "Gratuito"}
+                  {event.price != null && event.price > 0 ? `${event.price} €` : "Gratis"}
                 </div>
               </div>
             </div>

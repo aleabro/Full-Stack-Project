@@ -39,7 +39,16 @@ class EventViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.action in ['update', 'partial_update', 'destroy', 'my_events']:
             return Event.objects.filter(organizer=self.request.user)
-        return Event.objects.all()
+        
+        # Gestione filtri per la lista pubblica degli eventi
+        queryset = Event.objects.all()
+        
+        # Filtro per organizzazione specifica
+        organization_id = self.request.query_params.get('organization', None)
+        if organization_id is not None:
+            queryset = queryset.filter(organizer_id=organization_id)
+            
+        return queryset
     # Override of the perform_create method to set the organizer of the event to the authenticated user.
     def perform_create(self, serializer):
         event=serializer.save(organizer=self.request.user)
