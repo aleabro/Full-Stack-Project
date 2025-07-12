@@ -25,6 +25,9 @@ Here is an example of what it should look like:
           'PASSWORD': 'password of the database',
           'PORT': '5432',
       }
+  #The following fields are needed for sending the e-mails. we're using dummy credentials created for this website
+  EMAIL = 'weloveevents00@gmail.com'
+  EMAIL_PASSWORD = 'jdrj fkvo wypr wozp'
   }
 ```
 
@@ -42,13 +45,8 @@ Change directory into `backend`:
 
 Create a virtual envronment and activate it:
 
+```
 python3 -m venv venv
-
-**On Windows:**
-venv\Scripts\activate
-
-**On Unix/Linux/macOS:**
-source venv/bin/activate
 ```
 Install all the backend dependencies (some may be missing from this list):
 
@@ -104,6 +102,11 @@ The React app should now be running at **http://localhost:3000**
 You should keep both backend and frontend servers running simultaneously while working on the project.
 
 Use the Django admin panel at http://localhost:8000/admin for managing users, events, and favorites.
+
+To send a mail from the terminal run the command 
+```
+manage.py send_mail_event_favourite_reminders
+```
 
 ## Contact 
 If you have any questions or want to contribute, feel free to open an issue or contact me directly.
