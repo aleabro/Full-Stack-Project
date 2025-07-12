@@ -76,7 +76,7 @@ class OrganizationUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'user_type', 'organization_profile')
+        fields = ('id', 'username', 'email', 'password', 'user_type', 'organization_profile', 'newsletter_subscription')
         read_only_fields = ('id', 'user_type')
 
     def update(self, instance, validated_data):

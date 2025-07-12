@@ -36,13 +36,15 @@ class EventAdmin(admin.ModelAdmin):
                 f"Data: {obj.date.strftime('%d/%m/%Y')}\n"
                 f"Ora: {obj.date.strftime('%H:%M')}\n"
                 f"Luogo: {obj.location}\n"
-                #f"Prezzo: {obj.price} €"
+                f"Provincia: {obj.provincia}\n"
+                f"Categoria: {obj.category}\n"
+                f"Prezzo: {f'{obj.price}€' if obj.price != 0 else 'Gratuito'}"
             )
 
             user_emails = list(CustomUser.objects.filter(newsletter_subscription=True).values_list('email', flat=True))
             anon_emails = list(NewsletterSubscriber.objects.values_list('email', flat=True))
             all_emails = list(set(user_emails + anon_emails))
-            from_email="info@weloveevents.it"
+            from_email="weloveevents00@gmail.com"
             all_emails = [email for email in all_emails if email and "@" in email]
             to_emails = [from_email] 
 

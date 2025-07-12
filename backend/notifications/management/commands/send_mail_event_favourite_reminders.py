@@ -27,21 +27,21 @@ class Command(BaseCommand):
 
 
         for event in events:
-            # Utenti che hanno l'evento tra i preferiti
-            favorites = Favorite.objects.filter(event=event)
+            # Utenti registrati che hanno l'evento tra i preferiti E sono iscritti alla newsletter
+            favorites = Favorite.objects.filter(event=event, user__newsletter_subscription=True)
             user_emails = [fav.user.email for fav in favorites if fav.user.email]
 
-            # Iscritti anonimi alla newsletter
+            # Iscritti anonimi alla newsletter (solo questi ricevono email per tutti gli eventi)
             anon_emails = list(NewsletterSubscriber.objects.values_list('email', flat=True))
 
             # Unisci le email senza duplicati
             all_emails = list(set(user_emails + anon_emails))
-            from_email="info@weloveevents.it"
+            from_email="weloveevents00@gmail.com"
             all_emails = [email for email in all_emails if email and "@" in email]
-            to_emails = [from_email] + all_emails
+            to_emails = [from_email]
 
             if all_emails:
-                self.stdout.write(f"Invio mail per evento '{event.title}' a: {all_emails}")
+                self.stdout.write(f"Invio mail per evento '{event.title}' a utenti con preferiti e newsletter attiva: {user_emails} e iscritti anonimi: {anon_emails}")
                 
                 subject=f"Promemoria: domani c'è l'evento '{event.title}'!"
                 body=(
@@ -49,8 +49,10 @@ class Command(BaseCommand):
                         f"Ti ricordiamo che domani si terrà l'evento '{event.title}'.\n"
                         f"Data e ora: {event.date.strftime('%d/%m/%Y %H:%M')}\n"
                         f"Luogo: {event.location}\n"
-                        f"Descrizione: {event.description}\n\n"
-                        # f"Prezzo: {event.price} €"
+                        f"Descrizione: {event.description}\n"
+                        f"Provincia: {event.provincia}\n"
+                        f"Categoria: {event.category}\n"
+                        f"Prezzo: {f'{event.price}€' if event.price != 0 else 'Gratuito'}\n"
                         f"Non mancare!"
             )
                 email = EmailMessage(

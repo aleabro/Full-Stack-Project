@@ -32,7 +32,7 @@ export default function Footer() {
             <h6 className="fw-bold">Supporto</h6>
             <ul className="list-unstyled">
               <li><a href="/#FAQ" className="text-white-50 text-decoration-none">FAQ</a></li>
-              <li><a href="mailto:info@weloveevents.com" className="text-white-50 text-decoration-none">Contattaci</a></li>
+              <li><a href="mailto:weloveevents00@gmail.com" className="text-white-50 text-decoration-none">Contattaci</a></li>
               <li><Link to="/privacy-policy" className="text-white-50 text-decoration-none">Privacy Policy</Link></li>
             </ul>
           </div>
@@ -40,7 +40,7 @@ export default function Footer() {
             <div className="mt-3">
               <h6 className="fw-bold mb-1">Contatti</h6>
               <p className="mb-0 small">
-                <i className="bi bi-envelope me-2"></i>info@weloveevents.com<br />
+                <i className="bi bi-envelope me-2"></i>weloveevents00@gmail.com<br />
                 <i className="bi bi-geo-alt me-2"></i>Via Branze, 42 - Brescia
               </p>
             </div>

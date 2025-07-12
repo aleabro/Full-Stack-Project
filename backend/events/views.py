@@ -61,13 +61,15 @@ class EventViewSet(viewsets.ModelViewSet):
                 f"Data: {event.date.strftime('%d/%m/%Y')}\n"
                 f"Ora: {event.date.strftime('%H:%M')}\n"
                 f"Luogo: {event.location}\n"
-               # f"Prezzo: {event.price} €"
+                f"Provincia: {event.provincia}\n"
+                f"Categoria: {event.category}\n"
+                f"Prezzo: {f'{event.price}€' if event.price != 0 else 'Gratuito'}"
             )
 
         user_emails = list(CustomUser.objects.filter(newsletter_subscription=True).values_list('email', flat=True))
         anon_emails = list(NewsletterSubscriber.objects.values_list('email', flat=True))
         all_emails = list(set(user_emails + anon_emails))
-        from_email="info@weloveevents.it"
+        from_email="weloveevents00@gmail.com"
         all_emails = [email for email in all_emails if email and "@" in email]
         to_emails = [from_email] 
 

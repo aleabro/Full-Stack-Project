@@ -22,7 +22,7 @@ export default function PrivacyPolicy() {
           <div className="bg-light rounded p-3">
             <strong>Events Website</strong><br />
             Via Branze, 42 - Brescia<br />
-            Email: <a href="mailto:info@eventswebsite.com">info@weloveevents.com</a>
+            Email: <a href="mailto:weloveevents00@gmail.com">weloveevents00@gmail.com</a>
           </div>
         </section>
 
@@ -98,7 +98,7 @@ export default function PrivacyPolicy() {
             <li>Revocare il consenso in qualsiasi momento.</li>
           </ul>
           <div className="alert alert-secondary mt-3" role="alert">
-            Per esercitare i tuoi diritti scrivi a: <a href="mailto:info@weloveevents.com">info@weloveevents.com</a>
+            Per esercitare i tuoi diritti scrivi a: <a href="mailto:weloveevents00@gmail.com">weloveevents00@gmail.com</a>
           </div>
         </section>
 

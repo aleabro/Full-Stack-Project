@@ -42,8 +42,12 @@ Change directory into `backend`:
 
 Create a virtual envronment and activate it:
 
-```
 python3 -m venv venv
+
+**On Windows:**
+venv\Scripts\activate
+
+**On Unix/Linux/macOS:**
 source venv/bin/activate
 ```
 Install all the backend dependencies (some may be missing from this list):
