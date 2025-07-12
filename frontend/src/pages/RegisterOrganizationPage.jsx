@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN } from "../constants";
 import {jwtDecode} from "jwt-decode";
 
-export default function RegisterOrganizationPage() {
+export default function RegisterOrganizationPage({ setUser}) {
         const navigate = useNavigate();
 
         useEffect(() => {
@@ -17,9 +17,14 @@ export default function RegisterOrganizationPage() {
             }
             }
         }, [navigate]);
+
+    const handleLoginSuccess = (userData) => {
+    setUser(userData);
+  };
+  
   return (
     <div className="container mt-5">
-      <RegisterOrganizationForm />
+      <RegisterOrganizationForm onLoginSuccess={handleLoginSuccess}/>
     </div>
   );
 }

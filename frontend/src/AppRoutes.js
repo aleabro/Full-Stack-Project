@@ -52,8 +52,8 @@ export default function AppRoutes({ events, setEvents, searchText, setSearchText
       <Route path="/login" element={<LoginPage setUser={setUser}/>} />
       <Route path="/logout" element={<LogOut setUser={setUser}/>} />
       <Route path="/register-choice" element={<RegisterChoicePage />} />
-      <Route path="/register-user" element={<RegisterUserPage />} />
-      <Route path="/register-organization" element={<RegisterOrganizationPage />} />
+      <Route path="/register-user" element={<RegisterUserPage setUser={setUser}/>} />
+      <Route path="/register-organization" element={<RegisterOrganizationPage setUser={setUser}/>} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/organization/:id" element={<OrganizationPage />} />
 
