@@ -89,8 +89,8 @@ function EventDetailView({
                 <img
                   src={event.image}
                   alt={event.title}
-                  className="img-fluid w-100 h-100"
-                  style={{ height : imageHeight }}
+                  className="img-fluid"
+                  style={{ height : imageHeight, objectFit: 'cover', }}
                 />
               </div>
             )}
