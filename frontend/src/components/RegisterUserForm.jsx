@@ -5,7 +5,7 @@ import LoadingIndicator from "./LoadingIndicator";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import axios from "axios";
 
-export default function RegisterUserForm() {
+export default function RegisterUserForm({onLoginSuccess}) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -64,6 +64,12 @@ export default function RegisterUserForm() {
       });
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+
+      const profileRes = await api.get("/api/profile/", {
+        headers: { Authorization: `Bearer ${res.data.access}` },
+      });
+
+      onLoginSuccess?.(profileRes.data);
 
       navigate("/");
     } catch (error) {

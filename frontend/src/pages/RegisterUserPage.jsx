@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN } from "../constants";
 import {jwtDecode} from "jwt-decode";
 
-export default function RegisterUserPage() {
+export default function RegisterUserPage({setUser}) {
         const navigate = useNavigate();
         // Check if the user is already logged in
         // If they are, redirect them to the home page
@@ -19,9 +19,12 @@ export default function RegisterUserPage() {
             }
             }
         }, [navigate]);
+          const handleLoginSuccess = (userData) => {
+            setUser(userData);
+          };
   return (
     <div className="container mt-5">
-      <RegisterUserForm />
+      <RegisterUserForm onLoginSuccess={handleLoginSuccess}/>
     </div>
   );
 }

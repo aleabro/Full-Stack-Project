@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import LoadingIndicator from "./LoadingIndicator";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
-export default function RegisterOrganizationForm() {
+export default function RegisterOrganizationForm({onLoginSuccess}) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -77,6 +77,13 @@ export default function RegisterOrganizationForm() {
       });
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+
+      const profileRes = await api.get("/api/profile/", {
+        headers: { Authorization: `Bearer ${res.data.access}` },
+      });
+
+      onLoginSuccess?.(profileRes.data);
+
       navigate("/");
     } catch (error) {
       console.error(error);
